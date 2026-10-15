@@ -1,0 +1,2202 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="theme-color" content="#1e40af">
+<title>WEDDING Market</title>
+<style>
+:root {
+    --bg-primary: #0a0a0a; --bg-secondary: #1a1a1a; --bg-tertiary: #27272a;
+    --text-primary: #ffffff; --text-secondary: #a1a1aa; --text-muted: #71717a;
+    --border-color: #27272a; --border-input: #3f3f46;
+    --accent: #3b82f6; --accent-dark: #1e40af; --accent-light: #60a5fa;
+    --card-bg: #1a1a1a; --input-bg: #0a0a0a;
+}
+body.light-theme {
+    --bg-primary: #f5f5f7; --bg-secondary: #ffffff; --bg-tertiary: #e5e5e7;
+    --text-primary: #1a1a1a; --text-secondary: #52525b; --text-muted: #71717a;
+    --border-color: #d4d4d8; --border-input: #a1a1aa;
+    --accent: #2563eb; --accent-dark: #1e40af; --accent-light: #3b82f6;
+    --card-bg: #ffffff; --input-bg: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',sans-serif; background:var(--bg-primary); color:var(--text-primary); padding-bottom:75px; transition:background .3s, color .3s; }
+.header { background:linear-gradient(135deg,#1e3a8a,#1e40af); padding:22px 20px; text-align:center; border-bottom:3px solid #3b82f6; position:relative; }
+.logo { font-size:28px; font-weight:bold; color:white; }
+.tagline { font-size:12px; opacity:.9; margin-top:5px; color:white; }
+.header-icons { position:absolute; top:20px; right:20px; display:flex; gap:12px; }
+.header-icon { font-size:22px; cursor:pointer; color:white; }
+.lang-switch { display:flex; justify-content:center; gap:10px; padding:10px; background:var(--bg-secondary); }
+.lang-btn { padding:7px 22px; border:2px solid var(--accent); border-radius:20px; cursor:pointer; font-weight:bold; background:var(--bg-primary); color:var(--accent); font-size:13px; }
+.lang-btn.active { background:var(--accent-dark); color:white; }
+.tabs { display:flex; background:var(--bg-secondary); padding:8px; gap:4px; overflow-x:auto; border-bottom:2px solid var(--accent-dark); }
+.tab { flex:1; text-align:center; padding:9px 6px; border-radius:20px; cursor:pointer; font-weight:bold; font-size:11px; color:var(--text-secondary); white-space:nowrap; }
+.tab.active { background:var(--accent-dark); color:white; }
+.section-title { font-size:17px; font-weight:bold; margin:15px; color:var(--accent); display:flex; justify-content:space-between; align-items:center; }
+.back-btn { background:var(--bg-tertiary); color:var(--text-secondary); border:none; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:bold; cursor:pointer; }
+.search-box { padding:15px; background:var(--bg-secondary); margin:12px 15px; border-radius:50px; border:1px solid var(--border-color); }
+.search-input { width:100%; padding:12px 18px; border:1px solid var(--border-input); border-radius:50px; font-size:15px; background:var(--input-bg); color:var(--text-primary); }
+.search-input:focus { outline:none; border-color:var(--accent); }
+.categories-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; padding:0 15px; margin-bottom:20px; }
+.category-card { background:var(--bg-secondary); border-radius:15px; padding:12px 5px; text-align:center; cursor:pointer; border:2px solid transparent; transition:all .3s; }
+.category-card.active { border-color:var(--accent); background:rgba(59,130,246,.15); }
+.category-card:active { transform:scale(.95); }
+.category-icon { font-size:30px; margin-bottom:6px; display:block; }
+.category-name { font-size:10px; font-weight:600; color:var(--text-secondary); }
+.card { background:var(--bg-secondary); border-radius:15px; padding:18px; margin:0 15px 12px; border:1px solid var(--border-color); }
+.btn { padding:12px 16px; border:none; border-radius:25px; font-weight:bold; cursor:pointer; font-size:14px; }
+.btn-primary { background:linear-gradient(135deg,var(--accent-dark),var(--accent)); color:white; }
+.btn-success { background:linear-gradient(135deg,#10b981,#059669); color:white; }
+.btn-warning { background:linear-gradient(135deg,#f59e0b,#d97706); color:white; }
+.btn-danger { background:linear-gradient(135deg,#ef4444,#dc2626); color:white; }
+.btn-dark { background:var(--bg-tertiary); color:var(--text-secondary); border:1px solid var(--border-input); }
+.btn-full { width:100%; }
+.btn-sm { padding:8px 12px; font-size:12px; }
+.btn:disabled { opacity:.5; cursor:not-allowed; }
+.service-card { background:var(--bg-secondary); border-radius:18px; padding:18px; margin:0 15px 12px; border:1px solid var(--border-color); border-left:4px solid var(--accent); position:relative; }
+.service-header { display:flex; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px; }
+.service-name { font-size:17px; font-weight:bold; color:var(--accent); }
+.service-price { background:linear-gradient(135deg,var(--accent-dark),var(--accent)); color:white; padding:4px 12px; border-radius:15px; font-size:13px; }
+.service-rating { margin:8px 0; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.stars { color:#ffc107; font-size:16px; }
+.rating-text { font-size:12px; color:var(--text-muted); }
+.service-details { color:var(--text-secondary); font-size:13px; margin:8px 0; display:flex; gap:12px; flex-wrap:wrap; }
+.service-description { color:var(--text-primary); font-size:13px; margin:8px 0; line-height:1.6; opacity:.9; }
+.btn-group { display:flex; gap:6px; margin-top:12px; flex-wrap:wrap; }
+.btn-group button { flex:1; padding:10px 6px; border:none; border-radius:25px; font-weight:bold; cursor:pointer; font-size:12px; min-width:55px; }
+.form-card { background:var(--bg-secondary); border-radius:20px; padding:20px; margin:15px; border:1px solid var(--accent-dark); }
+.form-group { margin-bottom:15px; }
+.form-group label { display:block; margin-bottom:8px; font-weight:bold; color:var(--accent); font-size:14px; }
+.form-group input,.form-group select,.form-group textarea { width:100%; padding:12px; border:1px solid var(--border-input); border-radius:10px; font-size:15px; background:var(--input-bg); color:var(--text-primary); }
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus { outline:none; border-color:var(--accent); }
+.form-group textarea { resize:vertical; min-height:80px; }
+.form-group small { color:var(--text-muted); font-size:11px; display:block; margin-top:5px; }
+.submit-btn { background:linear-gradient(135deg,var(--accent-dark),var(--accent)); color:white; border:none; padding:15px; border-radius:25px; font-size:17px; font-weight:bold; width:100%; cursor:pointer; }
+.submit-btn:disabled { background:var(--bg-tertiary); color:var(--text-muted); cursor:not-allowed; }
+.media-upload { border:2px dashed var(--accent); border-radius:15px; padding:20px; text-align:center; cursor:pointer; background:var(--input-bg); }
+.media-preview { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+.preview-item { position:relative; width:90px; height:90px; cursor:pointer; }
+.preview-item img,.preview-item video { width:100%; height:100%; border-radius:10px; object-fit:cover; border:2px solid var(--accent); transition:transform .2s; }
+.remove-media { position:absolute; top:-8px; right:-8px; background:#ef4444; color:white; border-radius:50%; width:22px; height:22px; text-align:center; font-size:13px; cursor:pointer; line-height:22px; z-index:2; }
+.zoom-overlay { position:absolute; bottom:5px; right:5px; background:rgba(0,0,0,.7); color:white; border-radius:50%; width:24px; height:24px; text-align:center; font-size:12px; line-height:24px; pointer-events:none; }
+.bank-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:10px; }
+.bank-item { background:var(--input-bg); border:2px solid var(--border-color); border-radius:12px; padding:10px; text-align:center; cursor:pointer; font-size:12px; }
+.bank-item.selected { border-color:var(--accent); background:rgba(59,130,246,.2); }
+.bank-logo { font-size:22px; display:block; margin-bottom:4px; }
+.bank-name { font-size:10px; color:var(--text-secondary); }
+.account-box { background:linear-gradient(135deg,rgba(30,64,175,.2),rgba(59,130,246,.2)); border:2px solid var(--accent); border-radius:15px; padding:18px; margin:12px 0; text-align:center; position:relative; }
+.account-box-title { color:var(--accent); font-size:13px; font-weight:bold; margin-bottom:8px; }
+.account-number { color:var(--text-primary); font-size:20px; font-weight:bold; letter-spacing:2px; margin:8px 0; }
+.account-holder { color:var(--text-secondary); font-size:12px; }
+.copy-btn { position:absolute; top:12px; right:12px; background:var(--accent-dark); color:white; border:none; padding:6px 12px; border-radius:15px; font-size:11px; font-weight:bold; cursor:pointer; }
+.copy-btn.copied { background:#10b981; }
+.modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.9); z-index:300; justify-content:center; align-items:center; padding:15px; }
+.modal.show { display:flex; }
+.modal-content { background:var(--bg-secondary); padding:25px; border-radius:20px; max-width:450px; width:100%; max-height:90vh; overflow-y:auto; border:1px solid var(--accent-dark); }
+.fullscreen-viewer { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:#000; z-index:500; justify-content:center; align-items:center; flex-direction:column; }
+.fullscreen-viewer.show { display:flex; }
+.fullscreen-viewer img { max-width:98%; max-height:80vh; object-fit:contain; transition:transform .3s; }
+.fullscreen-viewer video { max-width:98%; max-height:80vh; }
+.close-fullscreen { position:absolute; top:15px; right:20px; color:white; font-size:40px; cursor:pointer; z-index:501; background:rgba(0,0,0,.5); width:45px; height:45px; border-radius:50%; text-align:center; line-height:45px; }
+.viewer-controls { position:absolute; bottom:20px; display:flex; gap:10px; z-index:501; flex-wrap:wrap; justify-content:center; }
+.viewer-controls button { background:rgba(30,64,175,.8); color:white; border:none; padding:10px 18px; border-radius:25px; font-weight:bold; cursor:pointer; font-size:14px; }
+.viewer-nav { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,.5); color:white; font-size:30px; cursor:pointer; width:45px; height:45px; border-radius:50%; text-align:center; line-height:45px; z-index:501; }
+.viewer-nav.prev { left:15px; }
+.viewer-nav.next { right:15px; }
+.viewer-info { position:absolute; top:15px; left:20px; color:white; background:rgba(0,0,0,.6); padding:8px 15px; border-radius:20px; font-size:13px; z-index:501; }
+.toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:var(--accent-dark); color:white; padding:12px 25px; border-radius:25px; font-size:14px; z-index:400; max-width:90%; text-align:center; animation:slideUp .3s; }
+@keyframes slideUp { from { bottom:60px; opacity:0; } to { bottom:80px; opacity:1; } }
+.toast.success { background:#10b981; }
+.toast.error { background:#ef4444; }
+.toast.warn { background:#f59e0b; }
+.empty { text-align:center; padding:50px 20px; color:var(--text-muted); }
+.empty-icon { font-size:60px; margin-bottom:15px; }
+.bottom-nav { position:fixed; bottom:0; left:0; right:0; background:var(--bg-primary); display:flex; justify-content:space-around; padding:10px 3px; border-top:2px solid var(--accent-dark); z-index:100; }
+.nav-item { text-align:center; cursor:pointer; padding:5px 6px; color:var(--text-muted); flex:1; }
+.nav-item.active { color:var(--accent); }
+.nav-icon { font-size:20px; display:block; }
+.nav-label { font-size:9px; margin-top:2px; }
+.featured-badge { position:absolute; top:-8px; right:12px; background:linear-gradient(135deg,#f59e0b,#eab308); color:#1a1a1a; padding:3px 10px; border-radius:12px; font-size:10px; font-weight:bold; }
+.edit-badge { background:#8b5cf6; color:white; padding:3px 10px; border-radius:12px; font-size:10px; font-weight:bold; cursor:pointer; }
+.edit-badge.expired { background:#52525b; cursor:not-allowed; }
+.ad-lifetime-badge { position:absolute; top:-8px; left:12px; background:linear-gradient(135deg,#10b981,#059669); color:white; padding:3px 10px; border-radius:12px; font-size:10px; font-weight:bold; display:flex; align-items:center; gap:4px; }
+.ad-lifetime-badge.warn { background:linear-gradient(135deg,#f59e0b,#d97706); }
+.ad-lifetime-badge.danger { background:linear-gradient(135deg,#ef4444,#dc2626); }
+.ad-lifetime-badge.expired { background:linear-gradient(135deg,#52525b,#3f3f46); }
+.payment-bar { background:var(--bg-primary); border-radius:15px; padding:15px; margin:12px 15px; border:2px solid var(--border-color); }
+.payment-bar.active { border-color:#10b981; background:linear-gradient(135deg,rgba(16,185,129,.15),rgba(5,150,105,.15)); }
+.payment-bar.expiring { border-color:#f59e0b; background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(217,119,6,.15)); }
+.payment-bar.expired { border-color:#ef4444; background:linear-gradient(135deg,rgba(239,68,68,.15),rgba(220,38,38,.15)); }
+.payment-bar-title { font-weight:bold; font-size:14px; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+.payment-bar-title.active { color:#10b981; }
+.payment-bar-title.expiring { color:#f59e0b; }
+.payment-bar-title.expired { color:#ef4444; }
+.payment-bar-time { font-size:20px; font-weight:bold; color:var(--text-primary); letter-spacing:2px; font-family:monospace; }
+.payment-bar-desc { color:var(--text-secondary); font-size:12px; margin-top:5px; }
+.payment-bar-badge { background:#10b981; color:white; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:bold; }
+.payment-bar-badge.warn { background:#f59e0b; }
+.payment-bar-badge.danger { background:#ef4444; }
+.verify-step { background:var(--bg-primary); border-radius:12px; padding:15px; margin-bottom:10px; border-left:4px solid var(--accent); }
+.verify-step-title { color:var(--accent); font-weight:bold; font-size:14px; margin-bottom:5px; }
+.verify-step-text { color:var(--text-secondary); font-size:12px; line-height:1.6; }
+.info-box { background:rgba(30,58,138,.2); border:2px solid var(--accent); border-radius:12px; padding:12px; margin:10px 0; color:var(--accent); font-size:12px; line-height:1.6; }
+.edit-timer-box { background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(99,102,241,.15)); border:2px solid #8b5cf6; border-radius:15px; padding:15px; margin:12px 0; }
+.edit-timer-title { color:#8b5cf6; font-weight:bold; font-size:14px; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+.edit-timer-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border-input); }
+.edit-timer-row:last-child { border-bottom:none; }
+.edit-timer-label { color:var(--text-secondary); font-size:12px; }
+.edit-timer-value { color:var(--text-primary); font-weight:bold; font-size:14px; font-family:monospace; }
+.edit-timer-value.warn { color:#f59e0b; }
+.edit-timer-value.danger { color:#ef4444; }
+.edit-timer-progress { height:8px; background:var(--bg-tertiary); border-radius:4px; margin-top:10px; overflow:hidden; }
+.edit-timer-progress-bar { height:100%; background:linear-gradient(90deg,#8b5cf6,#6366f1); border-radius:4px; transition:width .3s; }
+.edit-timer-progress-bar.warn { background:linear-gradient(90deg,#f59e0b,#d97706); }
+.edit-timer-progress-bar.danger { background:linear-gradient(90deg,#ef4444,#dc2626); }
+.star-rating { display:flex; gap:5px; font-size:28px; cursor:pointer; justify-content:center; margin:10px 0; }
+.star-rating .star { color:#52525b; transition:transform .2s; }
+.star-rating .star.filled { color:#ffc107; }
+.star-rating .star:active { transform:scale(1.3); }
+.comment-section { background:var(--bg-secondary); border-radius:15px; padding:15px; margin:12px 15px; border:1px solid var(--border-color); }
+.comment-title { color:var(--accent); font-weight:bold; font-size:15px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; }
+.comment-item { background:var(--bg-primary); border-radius:10px; padding:12px; margin-bottom:10px; border-left:3px solid var(--accent); }
+.comment-header { display:flex; justify-content:space-between; margin-bottom:6px; }
+.comment-name { font-weight:bold; color:var(--accent); font-size:13px; }
+.comment-date { color:var(--text-muted); font-size:11px; }
+.comment-text { color:var(--text-primary); font-size:13px; line-height:1.5; opacity:.9; }
+.comment-stars { color:#ffc107; font-size:12px; margin-bottom:4px; }
+.comment-input-box { display:flex; gap:8px; margin-top:10px; }
+.comment-input-box input { flex:1; padding:10px; border:1px solid var(--border-input); border-radius:20px; background:var(--input-bg); color:var(--text-primary); font-size:13px; }
+.comment-input-box button { padding:10px 18px; background:var(--accent-dark); color:white; border:none; border-radius:20px; font-weight:bold; cursor:pointer; font-size:13px; }
+.admin-panel { background:var(--bg-secondary); border-radius:20px; padding:20px; margin:15px; border:2px solid #ef4444; }
+.admin-title { color:#ef4444; font-weight:bold; font-size:18px; margin-bottom:15px; display:flex; align-items:center; gap:10px; }
+.admin-stat { background:var(--bg-primary); border-radius:12px; padding:15px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; border-left:4px solid var(--accent); }
+.admin-stat-label { color:var(--text-secondary); font-size:13px; }
+.admin-stat-value { color:var(--text-primary); font-weight:bold; font-size:20px; }
+.admin-item { background:var(--bg-primary); border-radius:10px; padding:12px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; gap:10px; }
+.admin-item-info { flex:1; }
+.admin-item-name { color:var(--accent); font-weight:bold; font-size:13px; }
+.admin-item-detail { color:var(--text-muted); font-size:11px; margin-top:3px; }
+.admin-item-actions { display:flex; gap:5px; }
+.admin-item-actions button { padding:6px 10px; border:none; border-radius:15px; font-size:11px; font-weight:bold; cursor:pointer; }
+.login-box { background:var(--bg-secondary); border-radius:20px; padding:25px; margin:15px; border:2px solid var(--accent); }
+.login-icon { text-align:center; font-size:60px; margin-bottom:15px; }
+.login-title { color:var(--accent); font-weight:bold; font-size:20px; text-align:center; margin-bottom:20px; }
+.share-btn { background:linear-gradient(135deg,#10b981,#059669); color:white; border:none; padding:10px; border-radius:25px; font-weight:bold; cursor:pointer; font-size:12px; flex:1; }
+.map-container { background:var(--bg-secondary); border-radius:15px; padding:15px; margin:12px 15px; border:1px solid var(--border-color); }
+.map-title { color:var(--accent); font-weight:bold; font-size:14px; margin-bottom:10px; }
+.map-placeholder { background:linear-gradient(135deg,rgba(30,64,175,.2),rgba(59,130,246,.2)); border:2px dashed var(--accent); border-radius:12px; padding:30px; text-align:center; color:var(--text-secondary); font-size:12px; }
+.notif-badge { position:absolute; top:-5px; right:-5px; background:#ef4444; color:white; border-radius:50%; width:18px; height:18px; font-size:10px; font-weight:bold; display:flex; align-items:center; justify-content:center; }
+.notif-wrapper { position:relative; display:inline-block; }
+.notif-item { background:var(--bg-primary); border-radius:10px; padding:12px; margin-bottom:8px; border-left:3px solid var(--accent); }
+.notif-title { color:var(--accent); font-weight:bold; font-size:13px; }
+.notif-text { color:var(--text-secondary); font-size:12px; margin-top:3px; }
+.notif-time { color:var(--text-muted); font-size:10px; margin-top:3px; }
+.pin-input-box { text-align:center; padding:20px; }
+.pin-icon { font-size:60px; margin-bottom:15px; }
+.pin-title { color:#ef4444; font-weight:bold; font-size:18px; margin-bottom:10px; }
+.pin-subtitle { color:var(--text-secondary); font-size:13px; margin-bottom:20px; }
+.pin-input { text-align:center; letter-spacing:15px; font-size:24px; padding:15px; border:2px solid var(--accent); border-radius:12px; background:var(--input-bg); color:var(--text-primary); width:100%; font-family:monospace; font-weight:bold; }
+.pin-input:focus { outline:none; border-color:#ef4444; }
+.pin-hint { color:var(--text-muted); font-size:11px; margin-top:10px; }
+@media (max-width:480px) { .categories-grid { grid-template-columns:repeat(3,1fr); } }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-icons">
+        <div class="header-icon notif-wrapper" onclick="showNotifications()">
+            🔔
+            <span class="notif-badge" id="notifBadge" style="display:none;">0</span>
+        </div>
+        <div class="header-icon" onclick="toggleTheme()" id="themeIcon">🌙</div>
+        <div class="header-icon" onclick="showTab('settings')">⚙️</div>
+    </div>
+    <div class="logo">💍 WEDDING Market</div>
+    <div class="tagline" id="tagline">ሁሉም የሰርግ አገልግሎቶች በአንድ ቦታ</div>
+</div>
+
+<div class="lang-switch">
+    <button class="lang-btn active" id="langAm" onclick="setLang('am')">🇪🇹 አማርኛ</button>
+    <button class="lang-btn" id="langEn" onclick="setLang('en')">🇬🇧 English</button>
+</div>
+
+<div class="tabs">
+    <div class="tab active" onclick="showTab('home')" id="tabHome">🏠 መነሻ</div>
+    <div class="tab" onclick="showTab('services')" id="tabServices">📋 አገልግሎቶች</div>
+    <div class="tab" onclick="showTab('post')" id="tabPost">➕ ለጥፍ</div>
+    <div class="tab" onclick="showTab('myads')" id="tabMyads">📢 የእኔ</div>
+    <div class="tab" onclick="showTab('saved')" id="tabSaved">❤️ ተወዳጆች</div>
+    <div class="tab" onclick="showTab('settings')" id="tabSettings">⚙️ ሴቲንግ</div>
+</div>
+
+<div id="homeTab">
+    <div id="paymentStatusHome"></div>
+    <div class="search-box">
+        <input type="text" class="search-input" id="searchInput" placeholder="🔍 ፈልግ..." oninput="handleSearch()">
+    </div>
+    <div class="section-title" id="homeCatTitle">📋 የአገልግሎት ምድቦች</div>
+    <div class="categories-grid" id="categoriesGrid"></div>
+</div>
+
+<div id="servicesTab" style="display:none;">
+    <div class="section-title">
+        <span id="servicesSectionTitle">📋 ሁሉም አገልግሎቶች</span>
+        <button class="back-btn" id="backToCatsBtn" style="display:none;" onclick="backToCategories()">← ምድቦች</button>
+    </div>
+    <div id="allServicesList"></div>
+</div>
+
+<div id="detailTab" style="display:none;">
+    <div id="detailContent"></div>
+</div>
+
+<div id="postTab" style="display:none;">
+    <div id="postContent"></div>
+</div>
+
+<div id="myadsTab" style="display:none;">
+    <div class="section-title" id="myadsTitle">📢 የእኔ ማስታወቂያዎች</div>
+    <div id="myAdsList"></div>
+</div>
+
+<div id="savedTab" style="display:none;">
+    <div class="section-title" id="savedTitle">❤️ የተጠበቁ አገልግሎቶች</div>
+    <div id="savedList"></div>
+</div>
+
+<div id="settingsTab" style="display:none;">
+    <div class="form-card">
+        <div class="section-title" id="settingsTitle">⚙️ ሴቲንግ</div>
+        <div class="settings-header">
+            <div class="settings-avatar" id="settingsAvatar">👤</div>
+            <div>
+                <div class="settings-name" id="settingsName">ጎብኚ</div>
+                <div class="settings-phone" id="settingsPhone">ስልክ አልተመዘገበም</div>
+            </div>
+        </div>
+        <div class="form-group"><label id="lblFullName">ሙሉ ስም</label><input type="text" id="settingsNameInput"></div>
+        <div class="form-group"><label id="lblPhone">ስልክ ቁጥር</label><input type="tel" id="settingsPhoneInput"></div>
+        <div class="form-group"><label id="lblEmail">ኢሜይል</label><input type="email" id="settingsEmailInput" placeholder="email@example.com"></div>
+        <div class="form-group"><label id="lblCity">ከተማ</label><input type="text" id="settingsCityInput"></div>
+        <div class="section-title" style="font-size:15px; margin-top:20px;" id="notifTitle">🔔 ማሳወቂያ</div>
+        <div class="card" style="margin:0 0 10px 0;">
+            <label style="display:flex; justify-content:space-between; align-items:center; margin:0;">
+                <span id="lblEmailNotif">📧 የኢሜይል ማሳወቂያ</span>
+                <input type="checkbox" id="emailNotif" checked style="width:auto; transform:scale(1.5);">
+            </label>
+        </div>
+        <div class="card" style="margin:0 0 10px 0;">
+            <label style="display:flex; justify-content:space-between; align-items:center; margin:0;">
+                <span id="lblSmsNotif">📱 የSMS ማሳወቂያ</span>
+                <input type="checkbox" id="smsNotif" style="width:auto; transform:scale(1.5);">
+            </label>
+        </div>
+        <div class="card" style="margin:0 0 10px 0;">
+            <label style="display:flex; justify-content:space-between; align-items:center; margin:0;">
+                <span id="lblPushNotif">🔔 የPush ማሳወቂያ</span>
+                <input type="checkbox" id="pushNotif" checked style="width:auto; transform:scale(1.5);">
+            </label>
+        </div>
+        <button class="submit-btn" style="margin-top:20px;" onclick="saveSettings()" id="btnSaveSettings">💾 ሴቲንግ አስቀምጥ</button>
+        <button class="btn btn-danger btn-full" style="margin-top:10px;" onclick="openAdminPinModal()" id="btnAdmin">🔐 አድሚን ፓነል</button>
+        <button class="btn btn-dark btn-full" style="margin-top:10px;" onclick="clearAllData()" id="btnClearData">🗑️ ሁሉንም ውሂብ አጥፋ</button>
+    </div>
+</div>
+
+<div id="adminTab" style="display:none;">
+    <div id="adminContent"></div>
+</div>
+
+<div class="bottom-nav">
+    <div class="nav-item active" onclick="showTab('home')" id="navHome"><span class="nav-icon">🏠</span><span class="nav-label">መነሻ</span></div>
+    <div class="nav-item" onclick="showTab('services')" id="navServices"><span class="nav-icon">📋</span><span class="nav-label">አገልግሎቶች</span></div>
+    <div class="nav-item" onclick="showTab('post')" id="navPost"><span class="nav-icon">➕</span><span class="nav-label">ለጥፍ</span></div>
+    <div class="nav-item" onclick="showTab('myads')" id="navMyads"><span class="nav-icon">📢</span><span class="nav-label">የእኔ</span></div>
+    <div class="nav-item" onclick="showTab('saved')" id="navSaved"><span class="nav-icon">❤️</span><span class="nav-label">ተወዳጆች</span></div>
+    <div class="nav-item" onclick="showTab('settings')" id="navSettings"><span class="nav-icon">⚙️</span><span class="nav-label">ሴቲንግ</span></div>
+</div>
+
+<div id="modal" class="modal">
+    <div class="modal-content"><div id="modalContent"></div></div>
+</div>
+
+<div id="fullscreenViewer" class="fullscreen-viewer">
+    <div class="close-fullscreen" onclick="closeViewer()">×</div>
+    <div class="viewer-info" id="viewerInfo">1/1</div>
+    <div class="viewer-nav prev" onclick="prevMedia()">‹</div>
+    <div class="viewer-nav next" onclick="nextMedia()">›</div>
+    <div id="viewerContent"></div>
+    <div class="viewer-controls" id="viewerControls"></div>
+</div>
+
+<script>
+// ==================== TRANSLATIONS ====================
+const T = {
+    am: {
+        tagline: 'ሁሉም የሰርግ አገልግሎቶች በአንድ ቦታ',
+        tabHome: '🏠 መነሻ', tabServices: '📋 አገልግሎቶች', tabPost: '➕ ለጥፍ',
+        tabMyads: '📢 የእኔ', tabSaved: '❤️ ተወዳጆች', tabSettings: '⚙️ ሴቲንግ',
+        navHome: 'መነሻ', navServices: 'አገልግሎቶች', navPost: 'ለጥፍ',
+        navMyads: 'የእኔ', navSaved: 'ተወዳጆች', navSettings: 'ሴቲንግ',
+        searchPlaceholder: '🔍 ፈልግ...',
+        homeCatTitle: '📋 የአገልግሎት ምድቦች',
+        allServices: '📋 ሁሉም አገልግሎቶች',
+        backToCats: '← ምድቦች', back: '← ተመለስ',
+        myAdsTitle: '📢 የእኔ ማስታወቂያዎች',
+        savedTitle: '❤️ የተጠበቁ አገልግሎቶች',
+        settingsTitle: '⚙️ ሴቲንግ',
+        fullName: 'ሙሉ ስም', phone: 'ስልክ ቁጥር', email: 'ኢሜይል', city: 'ከተማ',
+        notifTitle: '🔔 ማሳወቂያ',
+        emailNotif: '📧 የኢሜይል ማሳወቂያ', smsNotif: '📱 የSMS ማሳወቂያ', pushNotif: '🔔 የPush ማሳወቂያ',
+        saveSettings: '💾 ሴቲንግ አስቀምጥ', adminPanel: '🔐 አድሚን ፓነል', clearData: '🗑️ ሁሉንም ውሂብ አጥፋ',
+        guest: 'ጎብኚ', noPhone: 'ስልክ አልተመዘገበም',
+        paymentStatus: 'የክፍያ ሁኔታ', notPaid: '❌ አልተከፈለም',
+        payToPost: 'ማስታወቂያ ለመለጠፍ መጀመሪያ ይክፈሉ',
+        payNow: '💳 አሁን ይክፈሉ',
+        paymentUsed: '✅ ክፍያ ተጠቅሟል', oneAdPosted: '📢 አንድ ማስታወቂያ ተለጥፏል',
+        oneAdOnly: 'በአንድ ክፍያ አንድ ማስታወቂያ ብቻ ይለጠፋል',
+        payNext: 'ለቀጣይ ማስታወቂያ እንደገና ይክፈሉ',
+        payNextBtn: '💳 ለቀጣይ ክፍያ ይዘጋጁ',
+        active: '✅ ንቁ', expiring: '⚠️ እያለቀ ነው', aboutToExpire: '🚨 በቅርቡ ያልቃል',
+        timeLeft: 'ማስታወቂያ ለመለጠፍ የቀረው ጊዜ',
+        normal: 'መደበኛ', premium: 'ቅድሚያ',
+        makePayment: '💳 ክፍያ ያድርጉ',
+        payWarning: '⚠️ <b>በአንድ ክፍያ አንድ ማስታወቂያ ብቻ</b> ይለጠፋል።<br>ማስታወቂያው ለ<b>30 ቀን</b> ያገለግላል።',
+        step1: '📌 ደረጃ 1: የክፍያ ዓይነት ይምረጡ',
+        step2: '📌 ደረጃ 2: ወደ ባንክ ይክፈሉ',
+        step3: '📌 ደረጃ 3: የክፍያ ስክሪን ሾት ያስገቡ',
+        normalPay: '📢 መደበኛ - 300 ETB (ለ1 ማስታወቂያ 30 ቀን)',
+        premiumPay: '⭐ ቅድሚያ - 600 ETB (ለ1 ማስታወቂያ 30 ቀን)',
+        payInstruction: '⚠️ ሲከፍሉ "Wedding Market" ብለው ያስገቡ',
+        screenshotInstruction: 'የከፈሉበትን ማረጋገጫ ስክሪን ሾት (Screenshot) ብቻ ያስገቡ',
+        uploadScreenshot: 'የክፍያ ማረጋገጫ ፎቶ ለመስቀል ይጫኑ',
+        verifyPayment: '🔐 ክፍያውን አረጋግጥ',
+        paymentConfirmed: '✅ ክፍያ ተረጋግጧል - አንድ ማስታወቂያ ይለጥፉ',
+        timeLeftShort: 'የቀረው ጊዜ (ከተለጠፈ በኋላ ይቋረጣል)',
+        afterPostEnds: '⚠️ ማስታወቂያ ከለጠፉ በኋላ ክፍያው ያበቃል',
+        newAd: '➕ አዲስ ማስታወቂያ ለጥፍ (አንድ ብቻ)',
+        editAd: '✏️ ማስታወቂያ አስተካክል',
+        adCategory: 'የአገልግሎት አይነት *', adName: 'የአገልግሎት ስም *',
+        adPhone: 'ስልክ ቁጥር *', adCity: 'ከተማ', adPrice: 'ዋጋ', adDesc: 'መግለጫ',
+        aiGenerate: '🤖 በAI አስፈጥር',
+        photosLabel: '📷 ፎቶዎች (እስከ 10)', photosUpload: 'ፎቶዎችን ለመስቀል ይጫኑ',
+        videoLabel: '🎥 ቪድዮ (እስከ 2 ደቂቃ)', videoUpload: 'ቪድዮ ለመስቀል ይጫኑ',
+        videoWarn: '⚠️ ቪድዮ ከ2 ደቂቃ መብለጥ የለበትም',
+        adTypeDisplay: 'የማስታወቂያ ዓይነት (የተከፈለ)',
+        submitAd: '📢 ማስታወቂያ ለጥፍ', saveChanges: '💾 ለውጦችን አስቀምጥ',
+        editWithin15: '✏️ አስተካክል (እስከ 15 ቀን)',
+        editTimeExpired: '⏰ የማስተካከያ ጊዜ አልፏል',
+        adPosted: '📢 አንድ ማስታወቂያ ተለጥፏል',
+        adUsedInfo: 'በዚህ ክፍያ <b>አንድ ማስታወቂያ ብቻ</b> መለጠፍ ይችላሉ። አሁን ክፍያው ተጠቅሟል።',
+        call: '📞 ይደውሉ', reviews: 'ግምገማ',
+        save: '💾 አስቀምጥ', delete: '🗑️ አጥፋ', close: '✖️ ዝጋ',
+        zoom: '🔍+ ዙም', zoomOut: '🔍- አሳንስ', reset: '🔄 አድስ',
+        play: '▶️ አጫውት', mute: '🔊 ድምጽ',
+        copy: '📋 ኮፒ', copied: '✅ ተቀድቷል!',
+        noService: 'ምንም አገልግሎት አልተገኘም', noSaved: 'የተቀመጠ አገልግሎት የለም',
+        noAds: 'እስካሁን ማስታወቂያ አልለጠፉም', postAdBtn: '➕ ማስታወቂያ ለጥፍ',
+        noAdsInCat: 'በዚህ ምድብ ውስጥ ምንም ማስታወቂያ የለም',
+        postFirst: '➕ የመጀመሪያውን ማስታወቂያ ይለጥፉ',
+        refRequired: '⚠️ ባንክ ይምረጡ!', screenshotRequired: '⚠️ የክፍያ ስክሪን ሾት ያስገቡ!',
+        paymentVerified: '✅ ክፍያው ተረጋግጧል! አሁን አንድ ማስታወቂያ ይለጥፉ',
+        paymentExpired: '⏰ የክፍያ ጊዜው አልፏል! እንደገና ይክፈሉ።',
+        newPaymentReady: '💳 አዲስ ክፍያ ለማድረግ ተዘጋጅቷል',
+        adSubmitted: '✅ ማስታወቂያዎ ተሰቅሏል! ለ30 ቀን ያገለግላል።',
+        adUpdated: '✅ ማስታወቂያው ተስተካክሏል!',
+        fillNamePhone: '⚠️ ስም እና ስልክ ይሙሉ!',
+        editExpired: '❌ የማስተካከያ ጊዜው (15 ቀን) አልፏል!',
+        settingsSaved: '✅ ሴቲንግ ተቀምጧል!',
+        confirmClear: 'ሁሉንም ውሂብ ማጥፋት ይፈልጋሉ?',
+        savedMsg: '❤️ ተቀምጧል', removedMsg: '🤍 ተወግዷል',
+        descGenerated: '🤖 መግለጫ ተፈጥሯል!', videoUploaded: '✅ ቪድዮ ተሰቅሏል!',
+        videoTooLong: '⚠️ ቪድዮ ከ2 ደቂቃ በላይ ነው!',
+        tooManyPhotos: '⚠️ ከ10 ፎቶ በላይ መስቀል አይቻልም!',
+        photoTooBig: '⚠️ ፎቶው ከ5MB በላይ ነው!',
+        allCategories: '📋 ሁሉንም ምድቦች ይመልከቱ',
+        editTimerTitle: '✏️ የማስተካከያ ጊዜ',
+        editPostedDate: 'የተለጠፈበት ቀን', editDeadlineDate: 'የመጨረሻ ቀን',
+        editProgress: 'የተጠናቀቀው ጊዜ',
+        editActive: '✅ ንቁ', editExpiring: '⚠️ እያለቀ ነው', editExpiredBadge: '❌ ጊዜው አልፏል',
+        editDays: 'ቀን', editHours: 'ሰዓት', editMinutes: 'ደቂቃ',
+        editingAd: '✏️ ማስታወቂያ በማስተካከል ላይ',
+        editInfo: 'ይህን ማስታወቂያ ከተለጠፈበት ቀን አንስቶ እስከ 15 ቀን ድረስ ማስተካከል ይችላሉ።',
+        backToMyAds: '← ወደ የእኔ ማስታወቂያዎች',
+        rateService: '⭐ ደረጃ ይስጡ', yourRating: 'የእርስዎ ደረጃ',
+        submitRating: 'ደረጃ አስገባ', ratingSubmitted: '✅ ደረጃዎ ተሰጥቷል!',
+        comments: '💬 አስተያየቶች', addComment: 'አስተያየት ይጻፉ...',
+        submit: 'አስገባ', commentAdded: '✅ አስተያየትዎ ተጨምሯል!',
+        noComments: 'እስካሁን አስተያየት የለም',
+        share: '📤 አጋራ', shareTitle: 'ይህን ማስታወቂያ ያጋሩ',
+        copied: '✅ ተቀድቷል!', shareVia: 'በዚህ ያጋሩ',
+        viewLocation: '🗺️ ቦታ ይመልከቱ', mapTitle: '📍 የአገልግሎት ቦታ',
+        openInMaps: 'በGoogle Maps ክፈት', yourLocation: 'የአገልግሎት አድራሻ',
+        login: '🔐 ግባ', logout: 'ውጣ', loginTitle: 'ወደ Wedding Market ይግቡ',
+        phoneNumber: 'ስልክ ቁጥር', otpCode: 'የማረጋገጫ ኮድ (6 አሃዝ)',
+        sendOtp: 'ኮድ ላክ', verify: 'አረጋግጥ',
+        loginSuccess: '✅ በተሳካ ሁኔታ ገብተዋል!',
+        invalidPhone: '⚠️ ትክክለኛ ስልክ ቁጥር ያስገቡ!',
+        invalidOtp: '❌ የተሳሳተ ኮድ!',
+        otpSent: '📱 ኮድ ተልኳል! (ለሙከራ: 123456)',
+        adminTitle: '📊 አድሚን ፓነል',
+        totalAds: 'ጠቅላላ ማስታወቂያዎች', activeAds: 'ንቁ ማስታወቂያዎች',
+        expiredAds: 'ያለቁ ማስታወቂያዎች',
+        totalUsers: 'ጠቅላላ ተጠቃሚዎች', totalComments: 'ጠቅላላ አስተያየቶች',
+        totalRatings: 'ጠቅላላ ደረጃዎች',
+        manageAds: '📋 ማስታወቂያዎችን አስተዳድር',
+        deleteAd: '🗑️ አጥፋ', featureAd: '⭐ ቅድሚያ', unfeatureAd: 'ቅድሚያ አንሳ',
+        adDeleted: '✅ ማስታወቂያው ጠፍቷል!', adFeatured: '⭐ ቅድሚያ ተሰጥቷል!',
+        adUnfeatured: 'ቅድሚያ ተነስቷል',
+        confirmDeleteAd: 'ይህን ማስታወቂያ ማጥፋት ይፈልጋሉ?',
+        notifications: '🔔 ማሳወቂያዎች', noNotifications: 'እስካሁን ማሳወቂያ የለም',
+        markAllRead: 'ሁሉንም አንብቤያለሁ',
+        newAdPosted: '🆕 አዲስ ማስታወቂያ ተለጥፏል',
+        newComment: '💬 አዲስ አስተያየት', newRating: '⭐ አዲስ ደረጃ',
+        installApp: '📱 አፑን ጫን',
+        installPrompt: 'Wedding Market ን እንደ መተግበሪያ ይጫኑ',
+        install: 'ጫን', later: 'በኋላ', appInstalled: '✅ አፑ ተጭኗል!',
+        adLifetime: '📅 የማስታወቂያ ዕድሜ',
+        daysRemaining: 'የቀሩ ቀናት',
+        adActive: '✅ ንቁ', adExpiring: '⚠️ እያለቀ ነው',
+        adExpired: '❌ ጊዜው አልፏል',
+        adValid30Days: 'ማስታወቂያው ለ30 ቀን ያገለግላል',
+        adLifeProgress: 'የተጠናቀቀው ጊዜ',
+        adminPinTitle: '🔐 አድሚን መግቢያ',
+        adminPinSubtitle: 'የአድሚን ፒን ኮድ ያስገቡ',
+        adminPinPlaceholder: '••••',
+        adminPinHint: '💡 ነባሪ ፒን: 1234',
+        enterAdminPin: 'ወደ አድሚን ፓነል ግባ',
+        wrongPin: '❌ የተሳሳተ ፒን ኮድ!',
+        adminAccessGranted: '✅ ወደ አድሚን ፓነል ገብተዋል',
+        adminLogout: '🚪 ከአድሚን ውጣ',
+        onlyForOwner: '⚠️ ይህ ክፍል ለአፑ ባለቤት ብቻ ነው',
+        changePin: '🔑 ፒን ቀይር',
+        newPin: 'አዲስ ፒን', confirmPin: 'ፒን አረጋግጥ',
+        pinChanged: '✅ ፒን ተቀይሯል!', pinMismatch: '❌ ፒኖች አይመሳሰሉም!',
+        pinMinLength: '⚠️ ፒን ቢያንስ 4 አሃዝ መሆን አለበት!',
+        expiredAdsSection: '❌ ያለቁ ማስታወቂያዎች',
+        noExpiredAds: 'ምንም ያለቀ ማስታወቂያ የለም',
+        deleteAllExpired: '🗑️ ሁሉንም ያለቁ አጥፋ',
+        confirmDeleteAllExpired: 'ሁሉንም ያለቁ ማስታወቂያዎች ማጥፋት ይፈልጋሉ?',
+        expiredAdsDeleted: '✅ ያለቁ ማስታወቂያዎች ጠፍተዋል!',
+        expiredBadge: '⏰ ጊዜው አልፏል',
+        renewAd: '🔄 አድስ',
+        renewPrompt: 'ይህን ማስታወቂያ ለማደስ እንደገና መክፈል ይኖርብዎታል',
+        expiredHiddenInfo: 'ያለቁ ማስታወቂያዎች ለተጠቃሚዎች አይታዩም'
+    },
+    en: {
+        tagline: 'All wedding services in one place',
+        tabHome: '🏠 Home', tabServices: '📋 Services', tabPost: '➕ Post',
+        tabMyads: '📢 My Ads', tabSaved: '❤️ Saved', tabSettings: '⚙️ Settings',
+        navHome: 'Home', navServices: 'Services', navPost: 'Post',
+        navMyads: 'My Ads', navSaved: 'Saved', navSettings: 'Settings',
+        searchPlaceholder: '🔍 Search...',
+        homeCatTitle: '📋 Service Categories',
+        allServices: '📋 All Services',
+        backToCats: '← Categories', back: '← Back',
+        myAdsTitle: '📢 My Advertisements',
+        savedTitle: '❤️ Saved Services',
+        settingsTitle: '⚙️ Settings',
+        fullName: 'Full Name', phone: 'Phone Number', email: 'Email', city: 'City',
+        notifTitle: '🔔 Notifications',
+        emailNotif: '📧 Email Notification', smsNotif: '📱 SMS Notification', pushNotif: '🔔 Push Notification',
+        saveSettings: '💾 Save Settings', adminPanel: '🔐 Admin Panel', clearData: '🗑️ Clear All Data',
+        guest: 'Guest', noPhone: 'Phone not registered',
+        paymentStatus: 'Payment Status', notPaid: '❌ Not Paid',
+        payToPost: 'Pay first to post an advertisement',
+        payNow: '💳 Pay Now',
+        paymentUsed: '✅ Payment Used', oneAdPosted: '📢 One advertisement posted',
+        oneAdOnly: 'One payment allows one advertisement only',
+        payNext: 'Pay again for your next advertisement',
+        payNextBtn: '💳 Prepare for Next Payment',
+        active: '✅ Active', expiring: '⚠️ Expiring Soon', aboutToExpire: '🚨 About to Expire',
+        timeLeft: 'Time left to post advertisement',
+        normal: 'Normal', premium: 'Premium',
+        makePayment: '💳 Make Payment',
+        payWarning: '⚠️ <b>One payment allows one advertisement only</b>.<br>The ad will be valid for <b>30 days</b>.',
+        step1: '📌 Step 1: Choose Payment Type',
+        step2: '📌 Step 2: Pay to Bank',
+        step3: '📌 Step 3: Upload Payment Screenshot',
+        normalPay: '📢 Normal - 300 ETB (1 ad for 30 days)',
+        premiumPay: '⭐ Premium - 600 ETB (1 ad for 30 days)',
+        payInstruction: '⚠️ When paying, enter "Wedding Market" as reference',
+        screenshotInstruction: 'Upload only the payment confirmation screenshot',
+        uploadScreenshot: 'Tap to upload payment confirmation photo',
+        verifyPayment: '🔐 Verify Payment',
+        paymentConfirmed: '✅ Payment Confirmed - Post One Ad',
+        timeLeftShort: 'Time left (ends after posting)',
+        afterPostEnds: '⚠️ Payment ends immediately after you post',
+        newAd: '➕ Post New Advertisement (One Only)',
+        editAd: '✏️ Edit Advertisement',
+        adCategory: 'Service Category *', adName: 'Service Name *',
+        adPhone: 'Phone Number *', adCity: 'City', adPrice: 'Price', adDesc: 'Description',
+        aiGenerate: '🤖 Generate with AI',
+        photosLabel: '📷 Photos (Max 10)', photosUpload: 'Tap to upload photos',
+        videoLabel: '🎥 Video (Max 2 minutes)', videoUpload: 'Tap to upload video',
+        videoWarn: '⚠️ Video must not exceed 2 minutes',
+        adTypeDisplay: 'Advertisement Type (Paid)',
+        submitAd: '📢 Post Advertisement', saveChanges: '💾 Save Changes',
+        editWithin15: '✏️ Edit (Within 15 Days)',
+        editTimeExpired: '⏰ Edit time expired',
+        adPosted: '📢 One advertisement posted',
+        adUsedInfo: 'With this payment you can post <b>only one advertisement</b>. The payment has now been used.',
+        call: '📞 Call', reviews: 'reviews',
+        save: '💾 Save', delete: '🗑️ Delete', close: '✖️ Close',
+        zoom: '🔍+ Zoom', zoomOut: '🔍- Zoom Out', reset: '🔄 Reset',
+        play: '▶️ Play', mute: '🔊 Mute',
+        copy: '📋 Copy', copied: '✅ Copied!',
+        noService: 'No services found', noSaved: 'No saved services',
+        noAds: 'No advertisements posted yet', postAdBtn: '➕ Post Advertisement',
+        noAdsInCat: 'No advertisements in this category',
+        postFirst: '➕ Post the first advertisement',
+        refRequired: '⚠️ Please select a bank!', screenshotRequired: '⚠️ Please upload payment screenshot!',
+        paymentVerified: '✅ Payment verified! Now post one advertisement',
+        paymentExpired: '⏰ Payment time expired! Pay again.',
+        newPaymentReady: '💳 Ready for new payment',
+        adSubmitted: '✅ Advertisement posted! Valid for 30 days.',
+        adUpdated: '✅ Advertisement updated!',
+        fillNamePhone: '⚠️ Please fill in name and phone!',
+        editExpired: '❌ Edit time (15 days) has expired!',
+        settingsSaved: '✅ Settings saved!',
+        confirmClear: 'Do you want to clear all data?',
+        savedMsg: '❤️ Saved', removedMsg: '🤍 Removed',
+        descGenerated: '🤖 Description generated!', videoUploaded: '✅ Video uploaded!',
+        videoTooLong: '⚠️ Video exceeds 2 minutes!',
+        tooManyPhotos: '⚠️ Cannot upload more than 10 photos!',
+        photoTooBig: '⚠️ Photo exceeds 5MB!',
+        allCategories: '📋 View all categories',
+        editTimerTitle: '✏️ Edit Time',
+        editPostedDate: 'Posted Date', editDeadlineDate: 'Deadline Date',
+        editProgress: 'Time Elapsed',
+        editActive: '✅ Active', editExpiring: '⚠️ Expiring Soon', editExpiredBadge: '❌ Expired',
+        editDays: 'days', editHours: 'hours', editMinutes: 'minutes',
+        editingAd: '✏️ Editing Advertisement',
+        editInfo: 'You can edit this advertisement from the posted date up to 15 days.',
+        backToMyAds: '← Back to My Ads',
+        rateService: '⭐ Rate Service', yourRating: 'Your Rating',
+        submitRating: 'Submit Rating', ratingSubmitted: '✅ Rating submitted!',
+        comments: '💬 Comments', addComment: 'Write a comment...',
+        submit: 'Submit', commentAdded: '✅ Comment added!',
+        noComments: 'No comments yet',
+        share: '📤 Share', shareTitle: 'Share this advertisement',
+        copied: '✅ Copied!', shareVia: 'Share via',
+        viewLocation: '🗺️ View Location', mapTitle: '📍 Service Location',
+        openInMaps: 'Open in Google Maps', yourLocation: 'Service Address',
+        login: '🔐 Login', logout: 'Logout', loginTitle: 'Login to Wedding Market',
+        phoneNumber: 'Phone Number', otpCode: 'Verification Code (6 digits)',
+        sendOtp: 'Send Code', verify: 'Verify',
+        loginSuccess: '✅ Successfully logged in!',
+        invalidPhone: '⚠️ Enter a valid phone number!',
+        invalidOtp: '❌ Invalid code!',
+        otpSent: '📱 Code sent! (Demo: 123456)',
+        adminTitle: '📊 Admin Panel',
+        totalAds: 'Total Ads', activeAds: 'Active Ads',
+        expiredAds: 'Expired Ads',
+        totalUsers: 'Total Users', totalComments: 'Total Comments',
+        totalRatings: 'Total Ratings',
+        manageAds: '📋 Manage Ads',
+        deleteAd: '🗑️ Delete', featureAd: '⭐ Feature', unfeatureAd: 'Unfeature',
+        adDeleted: '✅ Ad deleted!', adFeatured: '⭐ Featured!',
+        adUnfeatured: 'Unfeatured',
+        confirmDeleteAd: 'Delete this ad?',
+        notifications: '🔔 Notifications', noNotifications: 'No notifications yet',
+        markAllRead: 'Mark all as read',
+        newAdPosted: '🆕 New ad posted', newComment: '💬 New comment', newRating: '⭐ New rating',
+        installApp: '📱 Install App',
+        installPrompt: 'Install Wedding Market as an app',
+        install: 'Install', later: 'Later', appInstalled: '✅ App installed!',
+        adLifetime: '📅 Ad Lifetime',
+        daysRemaining: 'Days Remaining',
+        adActive: '✅ Active', adExpiring: '⚠️ Expiring Soon',
+        adExpired: '❌ Expired',
+        adValid30Days: 'Advertisement is valid for 30 days',
+        adLifeProgress: 'Time Elapsed',
+        adminPinTitle: '🔐 Admin Access',
+        adminPinSubtitle: 'Enter admin PIN code',
+        adminPinPlaceholder: '••••',
+        adminPinHint: '💡 Default PIN: 1234',
+        enterAdminPin: 'Enter Admin Panel',
+        wrongPin: '❌ Wrong PIN code!',
+        adminAccessGranted: '✅ Admin access granted',
+        adminLogout: '🚪 Logout from Admin',
+        onlyForOwner: '⚠️ This section is for the app owner only',
+        changePin: '🔑 Change PIN',
+        newPin: 'New PIN', confirmPin: 'Confirm PIN',
+        pinChanged: '✅ PIN changed!', pinMismatch: '❌ PINs do not match!',
+        pinMinLength: '⚠️ PIN must be at least 4 digits!',
+        expiredAdsSection: '❌ Expired Ads',
+        noExpiredAds: 'No expired ads',
+        deleteAllExpired: '🗑️ Delete All Expired',
+        confirmDeleteAllExpired: 'Delete all expired ads?',
+        expiredAdsDeleted: '✅ Expired ads deleted!',
+        expiredBadge: '⏰ Expired',
+        renewAd: '🔄 Renew',
+        renewPrompt: 'You need to pay again to renew this ad',
+        expiredHiddenInfo: 'Expired ads are hidden from users'
+    }
+};
+
+// ==================== CATEGORIES ====================
+const CATEGORIES = [
+    { key:'dj', name_am:'ዲጄ', name_en:'DJ', icon:'🎵' },
+    { key:'decor', name_am:'ዲኮር', name_en:'Decor', icon:'🎨' },
+    { key:'aschefari', name_am:'አስጨፋሪ', name_en:'Entertainment', icon:'🎊' },
+    { key:'band', name_am:'ባንድ', name_en:'Band', icon:'🎷' },
+    { key:'car', name_am:'መኪና ክራይ', name_en:'Car Rental', icon:'🚗' },
+    { key:'mize', name_am:'የሚዜ አገልግሎት', name_en:'Bridesmaid Service', icon:'👰' },
+    { key:'food', name_am:'ምግብ', name_en:'Food', icon:'🍽️' },
+    { key:'photo', name_am:'ፎቶ እና ቪድዮ', name_en:'Photo & Video', icon:'📸' },
+    { key:'flowers', name_am:'የአበባ አቅራቢ', name_en:'Florist', icon:'💐' },
+    { key:'mekab', name_am:'ሜካብ', name_en:'Traditional Ceremony', icon:'⛪' },
+    { key:'consultant', name_am:'አማካሪ', name_en:'Consultant', icon:'🧑‍💼' },
+    { key:'hall', name_am:'አዳራሽ', name_en:'Hall', icon:'🏰' },
+    { key:'park', name_am:'መናፈሻ', name_en:'Park', icon:'🏞️' },
+    { key:'rawmeat', name_am:'ጥሬ ስጋ', name_en:'Raw Meat', icon:'🥩' }
+];
+
+// ==================== BANKS (ቴሌብር + ንግድ ባንክ ብቻ) ====================
+const BANKS = [
+    { id:'telebirr', name_am:'ቴሌብር', name_en:'Telebirr', logo:'📱', account:'0968975786' },
+    { id:'cbe', name_am:'ንግድ ባንክ', name_en:'Commercial Bank of Ethiopia', logo:'🏦', account:'1000409327927' }
+];
+
+// ==================== CONFIG ====================
+const PAYMENT_VALIDITY_HOURS = 24;   // ክፍያ ለ24 ሰዓት ይቆያል
+const EDIT_VALIDITY_DAYS = 15;        // ማስተካከያ ጊዜ
+const AD_LIFETIME_DAYS = 30;          // ማስታወቂያ ለ30 ቀን ያገለግላል
+const DEFAULT_ADMIN_PIN = '1234';
+
+// ==================== STATE ====================
+let currentLang = 'am';
+let services = [];
+let savedServices = [];
+let selectedMedia = [];
+let selectedVideo = null;
+let payScreenshotData = null;
+let selectedAdBank = null;
+let selectedCategory = 'all';
+let viewingCategory = null;
+let myAds = [];
+let userSettings = { name:'', phone:'', email:'', city:'', emailNotif:true, smsNotif:false, pushNotif:true };
+let paymentStatus = { verified: false, used: false, expiresAt: 0, amount: 0, bank: '', type: '', postedAdId: null };
+let viewerMedia = [];
+let viewerIndex = 0;
+let countdownInterval = null;
+let adLifetimeInterval = null;
+let currentEditingId = null;
+let currentDetailId = null;
+let comments = [];
+let ratings = [];
+let notifications = [];
+let isDarkTheme = true;
+let currentUser = null;
+let navHistory = [];
+let currentTab = 'home';
+let deferredPrompt = null;
+let adminPin = DEFAULT_ADMIN_PIN;
+let isAdminAuthenticated = false;
+
+// ==================== HELPERS ====================
+function t(key) { return T[currentLang][key] || key; }
+function getCatName(cat) {
+    if (!cat) return '';
+    const c = CATEGORIES.find(x => x.name_am === cat || x.name_en === cat);
+    if (c) return currentLang === 'am' ? c.name_am : c.name_en;
+    return cat;
+}
+function getBankName(bank) {
+    if (!bank) return '';
+    const b = BANKS.find(x => x.name_am === bank || x.name_en === bank || x.id === bank);
+    if (b) return currentLang === 'am' ? b.name_am : b.name_en;
+    return bank;
+}
+function getEditInfo(serviceId) {
+    const s = services.find(x => x.id === serviceId);
+    if (!s || !s.date) return null;
+    const postedDate = new Date(s.date).getTime();
+    const deadline = postedDate + (EDIT_VALIDITY_DAYS * 24 * 60 * 60 * 1000);
+    const now = Date.now();
+    const totalDuration = EDIT_VALIDITY_DAYS * 24 * 60 * 60 * 1000;
+    const elapsed = now - postedDate;
+    const remaining = deadline - now;
+    const progressPercent = Math.min(100, Math.max(0, (elapsed / totalDuration) * 100));
+    const daysLeft = Math.floor(remaining / (1000 * 60 * 60 * 24));
+    const hoursLeft = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutesLeft = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+    return {
+        postedDate, deadline, remaining, progressPercent,
+        daysLeft: Math.max(0, daysLeft), hoursLeft: Math.max(0, hoursLeft),
+        minutesLeft: Math.max(0, minutesLeft),
+        isExpired: remaining <= 0,
+        isExpiring: remaining > 0 && remaining < (2 * 24 * 60 * 60 * 1000)
+    };
+}
+function getAdLifetimeInfo(serviceId) {
+    const s = services.find(x => x.id === serviceId);
+    if (!s || !s.date) return null;
+    const postedDate = new Date(s.date).getTime();
+    const expiryDate = postedDate + (AD_LIFETIME_DAYS * 24 * 60 * 60 * 1000);
+    const now = Date.now();
+    const totalDuration = AD_LIFETIME_DAYS * 24 * 60 * 60 * 1000;
+    const elapsed = now - postedDate;
+    const remaining = expiryDate - now;
+    const progressPercent = Math.min(100, Math.max(0, (elapsed / totalDuration) * 100));
+    const daysLeft = Math.ceil(remaining / (1000 * 60 * 60 * 24));
+    return {
+        postedDate, expiryDate, remaining, progressPercent,
+        daysLeft: Math.max(0, daysLeft),
+        isExpired: remaining <= 0,
+        isExpiring: remaining > 0 && remaining < (5 * 24 * 60 * 60 * 1000)
+    };
+}
+function getActiveServices() {
+    return services.filter(s => {
+        const info = getAdLifetimeInfo(s.id);
+        return info && !info.isExpired;
+    });
+}
+function formatDate(ts) {
+    const d = new Date(ts);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    const hours = String(d.getHours()).padStart(2, '0');
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
+}
+function startAdLifetimeTimer() {
+    if (adLifetimeInterval) clearInterval(adLifetimeInterval);
+    adLifetimeInterval = setInterval(() => {
+        if (currentTab === 'home') renderCategories();
+        if (currentTab === 'services') {
+            if (viewingCategory) renderViewingCategoryServices();
+            else renderAllServices();
+        }
+    }, 60 * 60 * 1000);
+}
+
+// ==================== DATA LOAD/SAVE ====================
+function loadData() {
+    const s = localStorage.getItem('wedding_v14');
+    if (s) {
+        const d = JSON.parse(s);
+        services = d.services || [];
+        savedServices = d.saved || [];
+        myAds = d.myAds || [];
+        userSettings = d.settings || userSettings;
+        paymentStatus = d.paymentStatus || paymentStatus;
+        comments = d.comments || [];
+        ratings = d.ratings || [];
+        notifications = d.notifications || [];
+        isDarkTheme = d.isDarkTheme !== false;
+        currentUser = d.currentUser || null;
+        adminPin = d.adminPin || DEFAULT_ADMIN_PIN;
+    } else {
+        services = [
+            { id:1, category:'ዲጄ', name:'አለማየሁ ዲጄ', phone:'0911223344', city:'አዲስ አበባ', price:'5,000 ብር', rating:4.8, reviews:45, description:'ሙዚቃ እና መዝናኛ ለሰርግዎ', featured:false, media:[], date: new Date().toISOString() },
+            { id:2, category:'ዲኮር', name:'ሰላም ዲኮር', phone:'0922334455', city:'አዲስ አበባ', price:'15,000 ብር', rating:4.7, reviews:28, description:'ውብ የሰርግ ማስጌጫ', featured:true, media:[], date: new Date().toISOString() },
+            { id:3, category:'አስጨፋሪ', name:'አበበ አስጨፋሪ', phone:'0933445566', city:'አዲስ አበባ', price:'8,000 ብር', rating:4.6, reviews:33, description:'ልዩ የሰርግ አስጨፋሪ', featured:false, media:[], date: new Date().toISOString() },
+            { id:4, category:'ባንድ', name:'ኢትዮ ባንድ', phone:'0944556677', city:'አዲስ አበባ', price:'20,000 ብር', rating:4.9, reviews:56, description:'ሙያዊ ባንድ', featured:true, media:[], date: new Date().toISOString() },
+            { id:5, category:'መኪና ክራይ', name:'ሮዝ ካር', phone:'0955667788', city:'አዲስ አበባ', price:'8,000 ብር', rating:4.5, reviews:22, description:'ሙሽራ እና ሚዜ መኪና', featured:false, media:[], date: new Date().toISOString() },
+            { id:6, category:'የሚዜ አገልግሎት', name:'ሳራ ሚዜ', phone:'0966778899', city:'አዲስ አበባ', price:'5,000 ብር', rating:4.8, reviews:41, description:'ሙያዊ ሚዜ አገልግሎት', featured:true, media:[], date: new Date().toISOString() },
+            { id:7, category:'ምግብ', name:'ሀበሻ ኬትሪንግ', phone:'0977889900', city:'አዲስ አበባ', price:'25,000 ብር', rating:4.9, reviews:67, description:'ባህላዊ ምግብ', featured:false, media:[], date: new Date().toISOString() },
+            { id:8, category:'ፎቶ እና ቪድዮ', name:'አይስ ፎቶግራፊ', phone:'0988990011', city:'አዲስ አበባ', price:'12,000 ብር', rating:4.7, reviews:52, description:'ፕሮፌሽናል ፎቶ', featured:false, media:[], date: new Date().toISOString() },
+            { id:9, category:'የአበባ አቅራቢ', name:'ጽጌረዳ አበባ', phone:'0999001122', city:'አዲስ አበባ', price:'3,000 ብር', rating:4.8, reviews:38, description:'የተለያዩ አበቦች', featured:true, media:[], date: new Date().toISOString() },
+            { id:10, category:'ሜካብ', name:'ቅዱስ ሜካብ', phone:'0919001234', city:'አዲስ አበባ', price:'10,000 ብር', rating:4.6, reviews:29, description:'ባህላዊ ሜካብ', featured:false, media:[], date: new Date().toISOString() },
+            { id:11, category:'አማካሪ', name:'ወይዘሮ ህሊና', phone:'0920112345', city:'አዲስ አበባ', price:'5,000 ብር', rating:4.9, reviews:89, description:'የሰርግ እቅድ', featured:false, media:[], date: new Date().toISOString() },
+            { id:12, category:'አዳራሽ', name:'ሮዝ አዳራሽ', phone:'0931223456', city:'አዲስ አበባ', price:'30,000 ብር', rating:4.8, reviews:74, description:'ውብ አዳራሽ', featured:true, media:[], date: new Date().toISOString() },
+            { id:13, category:'መናፈሻ', name:'ግሩን ፓርክ', phone:'0942334567', city:'አዲስ አበባ', price:'20,000 ብር', rating:4.7, reviews:45, description:'የውጭ ሰርግ ቦታ', featured:false, media:[], date: new Date().toISOString() },
+            { id:14, category:'ጥሬ ስጋ', name:'አርቤ ስጋ', phone:'0953445678', city:'አዲስ አበባ', price:'8,000 ብር', rating:4.7, reviews:44, description:'ምርጥ ጥሬ ስጋ', featured:false, media:[], date: new Date().toISOString() }
+        ];
+    }
+    applyTheme();
+    saveData();
+    loadSettingsUI();
+    startCountdown();
+    startAdLifetimeTimer();
+    updateNotifBadge();
+}
+
+function saveData() {
+    localStorage.setItem('wedding_v14', JSON.stringify({
+        services, saved: savedServices, myAds,
+        settings: userSettings, paymentStatus,
+        comments, ratings, notifications,
+        isDarkTheme, currentUser, adminPin
+    }));
+}
+
+// ==================== THEME ====================
+function applyTheme() {
+    if (isDarkTheme) {
+        document.body.classList.remove('light-theme');
+        document.getElementById('themeIcon').textContent = '🌙';
+    } else {
+        document.body.classList.add('light-theme');
+        document.getElementById('themeIcon').textContent = '☀️';
+    }
+}
+function toggleTheme() {
+    isDarkTheme = !isDarkTheme;
+    applyTheme();
+    saveData();
+    toast(isDarkTheme ? '🌙 Dark mode' : '☀️ Light mode', 'success');
+}
+
+// ==================== NOTIFICATIONS ====================
+function addNotification(type, title, text) {
+    notifications.unshift({ id: Date.now(), type, title, text, time: new Date().toISOString(), read: false });
+    if (notifications.length > 50) notifications = notifications.slice(0, 50);
+    saveData();
+    updateNotifBadge();
+    if (userSettings.pushNotif && 'Notification' in window && Notification.permission === 'granted') {
+        new Notification(title, { body: text, icon: '💍' });
+    }
+}
+function updateNotifBadge() {
+    const unread = notifications.filter(n => !n.read).length;
+    const badge = document.getElementById('notifBadge');
+    if (badge) {
+        if (unread > 0) { badge.textContent = unread > 9 ? '9+' : unread; badge.style.display = 'flex'; }
+        else badge.style.display = 'none';
+    }
+}
+function showNotifications() {
+    const content = document.getElementById('modalContent');
+    content.innerHTML = `
+        <div class="section-title" style="margin:0 0 15px 0;">
+            ${t('notifications')}
+            ${notifications.length > 0 ? `<button class="back-btn" onclick="markAllRead()">${t('markAllRead')}</button>` : ''}
+        </div>
+        ${notifications.length === 0 ? `<div class="empty"><div class="empty-icon">🔔</div>${t('noNotifications')}</div>` 
+        : notifications.map(n => `
+            <div class="notif-item" style="${n.read ? 'opacity:.6;' : ''}">
+                <div class="notif-title">${n.title}</div>
+                <div class="notif-text">${n.text}</div>
+                <div class="notif-time">${formatDate(new Date(n.time).getTime())}</div>
+            </div>
+        `).join('')}
+        <button class="btn btn-dark btn-full" style="margin-top:15px;" onclick="closeModal()">${t('close')}</button>
+    `;
+    document.getElementById('modal').classList.add('show');
+}
+function markAllRead() { notifications.forEach(n => n.read = true); saveData(); updateNotifBadge(); showNotifications(); }
+function closeModal() { document.getElementById('modal').classList.remove('show'); }
+
+// ==================== ADMIN PIN ====================
+function openAdminPinModal() {
+    if (isAdminAuthenticated) { showTab('admin'); renderAdminPanel(); return; }
+    const content = document.getElementById('modalContent');
+    content.innerHTML = `
+        <div class="pin-input-box">
+            <div class="pin-icon">🔐</div>
+            <div class="pin-title">${t('adminPinTitle')}</div>
+            <div class="pin-subtitle">${t('adminPinSubtitle')}</div>
+            <div class="info-box" style="background:rgba(239,68,68,.15); border-color:#ef4444; color:#ef4444; margin-bottom:15px;">${t('onlyForOwner')}</div>
+            <input type="password" class="pin-input" id="adminPinInput" maxlength="8" placeholder="${t('adminPinPlaceholder')}" inputmode="numeric" autocomplete="off">
+            <div class="pin-hint">${t('adminPinHint')}</div>
+            <div style="display:flex; gap:10px; margin-top:20px;">
+                <button class="btn btn-dark btn-full" onclick="closeModal()">${t('close')}</button>
+                <button class="submit-btn" onclick="verifyAdminPin()">${t('enterAdminPin')}</button>
+            </div>
+        </div>
+    `;
+    document.getElementById('modal').classList.add('show');
+    setTimeout(() => document.getElementById('adminPinInput')?.focus(), 100);
+}
+function verifyAdminPin() {
+    const input = document.getElementById('adminPinInput');
+    const pin = input.value.trim();
+    if (pin !== adminPin) { toast(t('wrongPin'), 'error'); input.value = ''; input.focus(); return; }
+    isAdminAuthenticated = true;
+    closeModal();
+    toast(t('adminAccessGranted'), 'success');
+    showTab('admin');
+    renderAdminPanel();
+}
+function adminLogout() { isAdminAuthenticated = false; toast('🚪 Logged out', 'success'); showTab('settings'); }
+function changeAdminPin() {
+    const content = document.getElementById('modalContent');
+    content.innerHTML = `
+        <div class="pin-input-box">
+            <div class="pin-icon">🔑</div>
+            <div class="pin-title">${t('changePin')}</div>
+            <div class="form-group" style="text-align:left; margin-top:20px;"><label>${t('newPin')}</label><input type="password" class="pin-input" id="newPinInput" maxlength="8" inputmode="numeric" style="letter-spacing:8px;"></div>
+            <div class="form-group" style="text-align:left;"><label>${t('confirmPin')}</label><input type="password" class="pin-input" id="confirmPinInput" maxlength="8" inputmode="numeric" style="letter-spacing:8px;"></div>
+            <div style="display:flex; gap:10px; margin-top:15px;">
+                <button class="btn btn-dark btn-full" onclick="closeModal()">${t('close')}</button>
+                <button class="submit-btn" onclick="saveNewPin()">💾 ${t('save')}</button>
+            </div>
+        </div>
+    `;
+    document.getElementById('modal').classList.add('show');
+}
+function saveNewPin() {
+    const newPin = document.getElementById('newPinInput').value.trim();
+    const confirmPin = document.getElementById('confirmPinInput').value.trim();
+    if (newPin.length < 4) { toast(t('pinMinLength'), 'error'); return; }
+    if (newPin !== confirmPin) { toast(t('pinMismatch'), 'error'); return; }
+    adminPin = newPin;
+    saveData();
+    closeModal();
+    toast(t('pinChanged'), 'success');
+}
+
+// ==================== AD LIFETIME BADGE ====================
+function adLifetimeBadgeHTML(serviceId) {
+    const info = getAdLifetimeInfo(serviceId);
+    if (!info) return '';
+    let badgeClass = '', icon = '📅';
+    if (info.isExpired) { badgeClass = 'expired'; icon = '❌'; }
+    else if (info.isExpiring) { badgeClass = 'danger'; icon = '⚠️'; }
+    else if (info.daysLeft <= 10) { badgeClass = 'warn'; icon = '⏰'; }
+    return `<div class="ad-lifetime-badge ${badgeClass}">${icon} ${info.isExpired ? t('adExpired') : info.daysLeft + ' ' + t('editDays')}</div>`;
+}
+
+// ==================== PAYMENT ====================
+function isPaymentValid() {
+    if (!paymentStatus.verified) return false;
+    if (paymentStatus.used) return false;
+    if (Date.now() > paymentStatus.expiresAt) return false;
+    return true;
+}
+function canEditAd(serviceId) {
+    const info = getEditInfo(serviceId);
+    return info && !info.isExpired;
+}
+function getRemainingTime() {
+    if (!paymentStatus.verified || paymentStatus.used) return 0;
+    return Math.max(0, paymentStatus.expiresAt - Date.now());
+}
+function formatTime(ms) {
+    if (ms <= 0) return '00:00:00';
+    const hours = Math.floor(ms / (1000*60*60));
+    const minutes = Math.floor((ms % (1000*60*60)) / (1000*60));
+    const seconds = Math.floor((ms % (1000*60)) / 1000);
+    return `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+}
+function startCountdown() {
+    if (countdownInterval) clearInterval(countdownInterval);
+    countdownInterval = setInterval(() => {
+        if (paymentStatus.verified && !paymentStatus.used) {
+            if (Date.now() > paymentStatus.expiresAt) {
+                paymentStatus.verified = false;
+                saveData();
+                renderPaymentStatus();
+                renderPostTab();
+                toast(t('paymentExpired'), 'warn');
+            } else {
+                renderPaymentStatus();
+                updatePostCountdown();
+            }
+        }
+    }, 1000);
+}
+function renderPaymentStatus() {
+    const container = document.getElementById('paymentStatusHome');
+    if (!container) return;
+    if (!paymentStatus.verified && !paymentStatus.used) {
+        container.innerHTML = `
+            <div class="payment-bar expired">
+                <div class="payment-bar-title expired"><span>🔒</span> ${t('paymentStatus')}</div>
+                <div style="color:#ef4444; font-size:14px; font-weight:bold;">${t('notPaid')}</div>
+                <div class="payment-bar-desc">${t('payToPost')}</div>
+                <button class="btn btn-primary btn-full" style="margin-top:10px;" onclick="showTab('post')">${t('payNow')}</button>
+            </div>
+        `;
+        return;
+    }
+    if (paymentStatus.used) {
+        container.innerHTML = `
+            <div class="payment-bar expired">
+                <div class="payment-bar-title expired"><span>✅</span> ${t('paymentUsed')}</div>
+                <div style="color:#f59e0b; font-size:14px; font-weight:bold;">${t('oneAdPosted')}</div>
+                <div class="payment-bar-desc">${t('oneAdOnly')}<br>${t('adValid30Days')}<br>${t('payNext')}</div>
+                <button class="btn btn-primary btn-full" style="margin-top:10px;" onclick="showTab('post')">${t('payNextBtn')}</button>
+            </div>
+        `;
+        return;
+    }
+    const remaining = getRemainingTime();
+    const hoursLeft = remaining / (1000*60*60);
+    let barClass = 'active', badgeClass = '', statusText = t('active');
+    if (hoursLeft < 2) { barClass = 'expiring'; badgeClass = 'warn'; statusText = t('expiring'); }
+    if (hoursLeft < 1) { barClass = 'expiring'; badgeClass = 'danger'; statusText = t('aboutToExpire'); }
+    const typeText = paymentStatus.type === 'premium' ? t('premium') : t('normal');
+    container.innerHTML = `
+        <div class="payment-bar ${barClass}">
+            <div class="payment-bar-title ${barClass}">
+                <span>💳</span> ${t('paymentStatus')}
+                <span class="payment-bar-badge ${badgeClass}" style="margin-left:auto;">${statusText}</span>
+            </div>
+            <div style="color:var(--text-secondary); font-size:12px;">${t('timeLeft')}</div>
+            <div class="payment-bar-time" id="countdownTimer">${formatTime(remaining)}</div>
+            <div class="payment-bar-desc">
+                📋 ${typeText} - ${paymentStatus.amount} ETB<br>🏦 ${getBankName(paymentStatus.bank)}<br>📅 ${t('adValid30Days')}
+            </div>
+        </div>
+    `;
+}
+function renderPostTab() {
+    const container = document.getElementById('postContent');
+    if (!container) return;
+    if (currentEditingId) { renderEditForm(); return; }
+    if (paymentStatus.used) { renderPaymentUsedScreen(); return; }
+    if (!isPaymentValid()) { renderPaymentScreen(); return; }
+    renderPostForm();
+}
+function renderPaymentUsedScreen() {
+    const container = document.getElementById('postContent');
+    const postedAd = services.find(s => s.id === paymentStatus.postedAdId);
+    container.innerHTML = `
+        <div style="padding:15px;"><button class="back-btn" onclick="goBack()">${t('back')}</button></div>
+        <div class="form-card">
+            <div class="section-title">${t('paymentUsed')}</div>
+            <div class="info-box">${t('adUsedInfo')}<br><br>📅 <b>${t('adValid30Days')}</b></div>
+            ${postedAd ? `
+                <div class="service-card" style="margin:15px 0;">
+                    ${adLifetimeBadgeHTML(postedAd.id)}
+                    <div class="service-header">
+                        <div class="service-name">${postedAd.name}</div>
+                        <div class="service-price">${postedAd.price}</div>
+                    </div>
+                    <div class="service-details"><span>📋 ${getCatName(postedAd.category)}</span><span>📍 ${postedAd.city}</span></div>
+                    <div class="service-description">${postedAd.description}</div>
+                    ${canEditAd(postedAd.id) ? `<button class="btn btn-warning btn-full" style="margin-top:10px;" onclick="editAd(${postedAd.id})">${t('editWithin15')}</button>` : `<button class="btn btn-dark btn-full" style="margin-top:10px;" disabled>${t('editTimeExpired')}</button>`}
+                </div>
+            ` : ''}
+            <button class="submit-btn" onclick="startNewPayment()" style="margin-top:15px;">${t('payNextBtn')}</button>
+        </div>
+    `;
+}
+function startNewPayment() {
+    paymentStatus = { verified: false, used: false, expiresAt: 0, amount: 0, bank: '', type: '', postedAdId: null };
+    saveData();
+    renderPaymentStatus();
+    renderPostTab();
+    toast(t('newPaymentReady'), 'success');
+}
+function renderPaymentScreen() {
+    const container = document.getElementById('postContent');
+    container.innerHTML = `
+        <div style="padding:15px;"><button class="back-btn" onclick="goBack()">${t('back')}</button></div>
+        <div class="form-card">
+            <div class="section-title">${t('makePayment')}</div>
+            <div class="info-box">${t('payWarning')}</div>
+            <div class="verify-step">
+                <div class="verify-step-title">${t('step1')}</div>
+                <select id="payType" onchange="updatePayAmount()">
+                    <option value="normal">${t('normalPay')}</option>
+                    <option value="premium">${t('premiumPay')}</option>
+                </select>
+            </div>
+            <div class="verify-step">
+                <div class="verify-step-title">${t('step2')}</div>
+                <div class="verify-step-text" style="margin-bottom:10px; color:#f59e0b; font-weight:bold;">${t('payInstruction')}</div>
+                <div class="bank-grid" id="payBankGrid"></div>
+                <div id="payBankInfo"></div>
+            </div>
+            <div class="verify-step">
+                <div class="verify-step-title">${t('step3')}</div>
+                <div class="verify-step-text">${t('screenshotInstruction')}</div>
+                <div class="media-upload" onclick="document.getElementById('payScreenshot').click()" style="margin-top:10px;">
+                    <div style="font-size:35px;">📱</div>
+                    <div style="color:var(--text-secondary); margin-top:8px; font-size:13px;">${t('uploadScreenshot')}</div>
+                </div>
+                <input type="file" id="payScreenshot" accept="image/*" style="display:none" onchange="handlePayScreenshot(event)">
+                <div class="media-preview" id="payScreenshotPreview"></div>
+            </div>
+            <button class="submit-btn" onclick="verifyPayment()">${t('verifyPayment')}</button>
+        </div>
+    `;
+    renderPayBanks();
+}
+function renderPayBanks() {
+    document.getElementById('payBankGrid').innerHTML = BANKS.map(b => `
+        <div class="bank-item" id="pbank-${b.id}" onclick="selectPayBank('${b.id}')">
+            <span class="bank-logo">${b.logo}</span>
+            <span class="bank-name">${currentLang === 'am' ? b.name_am : b.name_en}</span>
+        </div>
+    `).join('');
+}
+function selectPayBank(id) {
+    selectedAdBank = id;
+    document.querySelectorAll('#payBankGrid .bank-item').forEach(e => e.classList.remove('selected'));
+    document.getElementById('pbank-'+id).classList.add('selected');
+    const b = BANKS.find(x => x.id === id);
+    const amount = document.getElementById('payType').value === 'premium' ? 600 : 300;
+    const bankName = currentLang === 'am' ? b.name_am : b.name_en;
+    document.getElementById('payBankInfo').innerHTML = `
+        <div class="account-box">
+            <button class="copy-btn" onclick="copyAccount('${b.account}', this)">${t('copy')}</button>
+            <div class="account-box-title">💳 ${bankName} - ${amount} ETB</div>
+            <div class="account-number">${b.account}</div>
+            <div class="account-holder">${bankName}</div>
+            <div style="color:#f59e0b; font-size:11px; margin-top:8px;">${t('payInstruction')}</div>
+        </div>
+    `;
+}
+function updatePayAmount() { if (selectedAdBank) selectPayBank(selectedAdBank); }
+function handlePayScreenshot(e) {
+    const f = e.target.files[0]; if (!f) return;
+    if (f.size > 5*1024*1024) { toast(t('photoTooBig'), 'error'); return; }
+    const r = new FileReader();
+    r.onload = ev => {
+        payScreenshotData = ev.target.result;
+        document.getElementById('payScreenshotPreview').innerHTML = `
+            <div class="preview-item">
+                <img src="${payScreenshotData}">
+                <div class="remove-media" onclick="payScreenshotData=null;document.getElementById('payScreenshotPreview').innerHTML='';">×</div>
+            </div>
+        `;
+    };
+    r.readAsDataURL(f); e.target.value = '';
+}
+function verifyPayment() {
+    const type = document.getElementById('payType').value;
+    const amount = type === 'premium' ? 600 : 300;
+    if (!selectedAdBank) { toast(t('refRequired'), 'error'); return; }
+    if (!payScreenshotData) { toast(t('screenshotRequired'), 'error'); return; }
+    const now = Date.now();
+    const expiresAt = now + (PAYMENT_VALIDITY_HOURS * 60 * 60 * 1000);
+    const bank = BANKS.find(x => x.id === selectedAdBank);
+    paymentStatus = { verified: true, used: false, expiresAt, amount, bank: bank.name_am, type, verifiedAt: now, postedAdId: null };
+    saveData();
+    payScreenshotData = null;
+    toast(t('paymentVerified'), 'success');
+    renderPaymentStatus();
+    renderPostTab();
+    startCountdown();
+}
+
+// ==================== DETAIL PAGE ====================
+function showDetail(id) {
+    currentDetailId = id;
+    navHistory.push(currentTab);
+    showTab('detail');
+    renderDetail();
+}
+function renderDetail() {
+    const s = services.find(x => x.id === currentDetailId);
+    if (!s) { goBack(); return; }
+    const container = document.getElementById('detailContent');
+    const isSaved = savedServices.includes(s.id);
+    const isMine = myAds.includes(s.id);
+    const stars = '⭐'.repeat(Math.floor(s.rating)) + '☆'.repeat(5 - Math.floor(s.rating));
+    const catName = getCatName(s.category);
+    const editInfo = getEditInfo(s.id);
+    const lifetimeInfo = getAdLifetimeInfo(s.id);
+    const serviceComments = comments.filter(c => c.serviceId === s.id);
+    const existingRating = ratings.find(r => r.serviceId === s.id && r.userId === (currentUser?.phone || 'guest'));
+    
+    container.innerHTML = `
+        <div style="padding:15px;"><button class="back-btn" onclick="goBack()">${t('back')}</button></div>
+        <div class="service-card" style="margin-top:0;">
+            ${s.featured ? `<div class="featured-badge">⭐ ${t('premium')}</div>` : ''}
+            ${lifetimeInfo ? adLifetimeBadgeHTML(s.id) : ''}
+            <div class="service-header">
+                <div class="service-name">${s.name} ${isMine ? '📢' : ''}</div>
+                <div class="service-price">${s.price}</div>
+            </div>
+            <div class="service-details" style="margin-bottom:10px;"><span>📋 ${catName}</span></div>
+            ${(s.media || []).length > 0 ? `
+                <div class="media-preview" style="margin-bottom:10px;">
+                    ${s.media.map((m, i) => `
+                        <div class="preview-item" onclick="openViewer(${s.id}, ${i})">
+                            ${m.type === 'image' ? `<img src="${m.url}">` : `<video src="${m.url}"></video>`}
+                            <div class="zoom-overlay">🔍</div>
+                        </div>
+                    `).join('')}
+                </div>
+            ` : ''}
+            <div class="service-description">${s.description}</div>
+            <div class="service-details"><span>📍 ${s.city}</span></div>
+            <div class="service-rating">
+                <span class="stars">${stars}</span>
+                <span class="rating-text">${s.rating}/5 (${s.reviews} ${t('reviews')})</span>
+            </div>
+            <div class="btn-group">
+                <button class="btn-success" onclick="location.href='tel:${s.phone}'">${t('call')}</button>
+                <button class="${isSaved ? 'btn-danger' : 'btn-warning'}" onclick="toggleSave(${s.id});renderDetail();">${isSaved ? '❤️' : '🤍'}</button>
+                <button class="share-btn" onclick="shareAd(${s.id})">${t('share')}</button>
+            </div>
+            ${editInfo ? `<div class="edit-timer-box" style="margin-top:15px;">${renderEditTimerHTML(editInfo)}</div>` : ''}
+        </div>
+        <div class="map-container">
+            <div class="map-title">${t('mapTitle')}</div>
+            <div class="map-placeholder">
+                🗺️<br><br>
+                <div style="color:var(--text-primary); font-weight:bold; margin-bottom:8px;">${s.city}</div>
+                <a href="https://www.google.com/maps/search/${encodeURIComponent(s.name + ' ' + s.city)}" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:bold;">📍 ${t('openInMaps')}</a>
+            </div>
+        </div>
+        <div class="comment-section">
+            <div class="comment-title">${t('rateService')}</div>
+            <div class="star-rating" id="starRating">
+                ${[1,2,3,4,5].map(i => `<span class="star ${existingRating && i <= existingRating.stars ? 'filled' : ''}" onclick="selectRating(${i})" data-star="${i}">★</span>`).join('')}
+            </div>
+            <div style="text-align:center; color:var(--text-secondary); font-size:12px; margin-bottom:10px;" id="ratingText">
+                ${existingRating ? `${t('yourRating')}: ${existingRating.stars}/5` : t('yourRating') + ': 0/5'}
+            </div>
+            <button class="btn btn-primary btn-full" onclick="submitRating(${s.id})">${t('submitRating')}</button>
+        </div>
+        <div class="comment-section">
+            <div class="comment-title">${t('comments')} (${serviceComments.length})</div>
+            ${serviceComments.length === 0 ? `<div style="text-align:center; color:var(--text-muted); font-size:13px; padding:15px;">${t('noComments')}</div>`
+            : serviceComments.map(c => `
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">${c.name}</span>
+                        <span class="comment-date">${formatDate(new Date(c.date).getTime())}</span>
+                    </div>
+                    ${c.stars ? `<div class="comment-stars">${'⭐'.repeat(c.stars)}</div>` : ''}
+                    <div class="comment-text">${c.text}</div>
+                </div>
+            `).join('')}
+            <div class="comment-input-box">
+                <input type="text" id="commentInput" placeholder="${t('addComment')}">
+                <button onclick="addComment(${s.id})">${t('submit')}</button>
+            </div>
+        </div>
+    `;
+}
+let selectedStarRating = 0;
+function selectRating(n) {
+    selectedStarRating = n;
+    document.querySelectorAll('#starRating .star').forEach((el, i) => el.classList.toggle('filled', i < n));
+    document.getElementById('ratingText').textContent = `${t('yourRating')}: ${n}/5`;
+}
+function submitRating(serviceId) {
+    if (selectedStarRating === 0) { toast('⚠️ ደረጃ ይምረጡ!', 'error'); return; }
+    const userId = currentUser?.phone || 'guest';
+    const existing = ratings.findIndex(r => r.serviceId === serviceId && r.userId === userId);
+    const ratingData = { serviceId, userId, stars: selectedStarRating, date: new Date().toISOString(), name: currentUser?.name || t('guest') };
+    if (existing > -1) ratings[existing] = ratingData;
+    else ratings.push(ratingData);
+    const s = services.find(x => x.id === serviceId);
+    if (s) {
+        const serviceRatings = ratings.filter(r => r.serviceId === serviceId);
+        const avg = serviceRatings.reduce((a, b) => a + b.stars, 0) / serviceRatings.length;
+        s.rating = Math.round(avg * 10) / 10;
+        s.reviews = serviceRatings.length;
+    }
+    addNotification('rating', t('newRating'), `${s.name} - ${selectedStarRating}⭐`);
+    saveData();
+    selectedStarRating = 0;
+    toast(t('ratingSubmitted'), 'success');
+    renderDetail();
+    renderAllServices();
+}
+function addComment(serviceId) {
+    const input = document.getElementById('commentInput');
+    const text = input.value.trim();
+    if (!text) return;
+    const s = services.find(x => x.id === serviceId);
+    comments.push({ serviceId, name: currentUser?.name || t('guest'), text, date: new Date().toISOString(), stars: selectedStarRating || 0 });
+    addNotification('comment', t('newComment'), `${s.name}: ${text.substring(0, 40)}...`);
+    saveData();
+    input.value = '';
+    toast(t('commentAdded'), 'success');
+    renderDetail();
+}
+function shareAd(id) {
+    const s = services.find(x => x.id === id);
+    if (!s) return;
+    const text = `💍 ${s.name}\n📋 ${getCatName(s.category)}\n💰 ${s.price}\n📍 ${s.city}\n📞 ${s.phone}\n\n${s.description}`;
+    const url = window.location.href;
+    if (navigator.share) navigator.share({ title: s.name, text, url }).catch(() => {});
+    else { copyToClipboard(text + '\n' + url); toast(t('copied'), 'success'); }
+}
+function copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).catch(() => fallbackCopyText(text));
+    else fallbackCopyText(text);
+}
+function fallbackCopyText(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+}
+
+// ==================== LOGIN ====================
+function showLogin() {
+    const content = document.getElementById('modalContent');
+    content.innerHTML = `
+        <div class="login-box" style="margin:0;">
+            <div class="login-icon">🔐</div>
+            <div class="login-title">${t('loginTitle')}</div>
+            <div class="form-group"><label>${t('phoneNumber')}</label><input type="tel" id="loginPhone" placeholder="09xxxxxxxx"></div>
+            <div class="form-group" id="otpGroup" style="display:none;">
+                <label>${t('otpCode')}</label>
+                <input type="text" id="loginOtp" maxlength="6" placeholder="123456" style="letter-spacing:5px; text-align:center; font-size:20px;">
+                <small style="color:#f59e0b;">💡 Demo: 123456</small>
+            </div>
+            <button class="submit-btn" id="loginBtn" onclick="handleLogin()">${t('sendOtp')}</button>
+            <button class="btn btn-dark btn-full" style="margin-top:10px;" onclick="closeModal()">${t('close')}</button>
+        </div>
+    `;
+    document.getElementById('modal').classList.add('show');
+}
+let loginPhoneValue = '';
+function handleLogin() {
+    const phoneEl = document.getElementById('loginPhone');
+    const otpGroup = document.getElementById('otpGroup');
+    const btn = document.getElementById('loginBtn');
+    if (otpGroup.style.display === 'none') {
+        const phone = phoneEl.value.trim();
+        if (!/^[0-9]{10}$/.test(phone)) { toast(t('invalidPhone'), 'error'); return; }
+        loginPhoneValue = phone;
+        otpGroup.style.display = 'block';
+        btn.textContent = t('verify');
+        toast(t('otpSent'), 'success');
+    } else {
+        const otp = document.getElementById('loginOtp').value.trim();
+        if (otp !== '123456') { toast(t('invalidOtp'), 'error'); return; }
+        currentUser = { phone: loginPhoneValue, name: userSettings.name || loginPhoneValue };
+        saveData();
+        closeModal();
+        toast(t('loginSuccess'), 'success');
+        loadSettingsUI();
+    }
+}
+function logout() { currentUser = null; saveData(); loadSettingsUI(); toast('✅ Logged out', 'success'); }
+
+// ==================== ADMIN PANEL ====================
+function renderAdminPanel() {
+    if (!isAdminAuthenticated) { showTab('settings'); openAdminPinModal(); return; }
+    const container = document.getElementById('adminContent');
+    const allAds = services;
+    const activeAds = getActiveServices();
+    const expiredAds = allAds.filter(s => {
+        const info = getAdLifetimeInfo(s.id);
+        return info && info.isExpired;
+    });
+    const totalUsersCount = new Set([...ratings.map(r => r.userId), ...comments.map(c => c.name)]).size;
+    
+    container.innerHTML = `
+        <div style="padding:15px; display:flex; justify-content:space-between; align-items:center;">
+            <button class="back-btn" onclick="goBack()">${t('back')}</button>
+            <button class="back-btn" style="background:#ef4444; color:white;" onclick="adminLogout()">${t('adminLogout')}</button>
+        </div>
+        <div class="admin-panel">
+            <div class="admin-title">${t('adminTitle')}</div>
+            <div class="info-box" style="background:rgba(239,68,68,.15); border-color:#ef4444; color:#ef4444;">${t('onlyForOwner')}</div>
+            <div class="admin-stat"><span class="admin-stat-label">📢 ${t('totalAds')}</span><span class="admin-stat-value">${allAds.length}</span></div>
+            <div class="admin-stat" style="border-left-color:#10b981;"><span class="admin-stat-label">✅ ${t('activeAds')}</span><span class="admin-stat-value" style="color:#10b981;">${activeAds.length}</span></div>
+            <div class="admin-stat" style="border-left-color:#ef4444;"><span class="admin-stat-label">❌ ${t('expiredAds')}</span><span class="admin-stat-value" style="color:#ef4444;">${expiredAds.length}</span></div>
+            <div class="admin-stat"><span class="admin-stat-label">👥 ${t('totalUsers')}</span><span class="admin-stat-value">${totalUsersCount}</span></div>
+            <div class="admin-stat"><span class="admin-stat-label">💬 ${t('totalComments')}</span><span class="admin-stat-value">${comments.length}</span></div>
+            <div class="admin-stat"><span class="admin-stat-label">⭐ ${t('totalRatings')}</span><span class="admin-stat-value">${ratings.length}</span></div>
+            <button class="btn btn-warning btn-full" style="margin-top:15px;" onclick="changeAdminPin()">${t('changePin')}</button>
+        </div>
+        ${expiredAds.length > 0 ? `
+            <div class="admin-panel" style="border-color:#f59e0b;">
+                <div class="admin-title" style="color:#f59e0b;">${t('expiredAdsSection')} (${expiredAds.length})</div>
+                <div class="info-box" style="background:rgba(245,158,11,.15); border-color:#f59e0b; color:#f59e0b;">${t('expiredHiddenInfo')}</div>
+                <button class="btn btn-danger btn-full" style="margin-bottom:15px;" onclick="deleteAllExpiredAds()">${t('deleteAllExpired')}</button>
+                ${expiredAds.map(s => `
+                    <div class="admin-item">
+                        <div class="admin-item-info">
+                            <div class="admin-item-name">${s.name}</div>
+                            <div class="admin-item-detail">${getCatName(s.category)} • ${s.city} • ${t('expiredBadge')}</div>
+                        </div>
+                        <div class="admin-item-actions"><button style="background:#ef4444; color:white;" onclick="deleteAdAdmin(${s.id})">🗑️</button></div>
+                    </div>
+                `).join('')}
+            </div>
+        ` : ''}
+        <div class="admin-panel">
+            <div class="admin-title">${t('manageAds')}</div>
+            ${services.length === 0 ? `<div style="text-align:center; color:var(--text-muted); padding:20px;">${t('noService')}</div>`
+            : services.map(s => {
+                const lifeInfo = getAdLifetimeInfo(s.id);
+                const isExpired = lifeInfo && lifeInfo.isExpired;
+                const daysLeft = lifeInfo ? lifeInfo.daysLeft : 0;
+                return `
+                    <div class="admin-item" style="${isExpired ? 'opacity:.6;' : ''}">
+                        <div class="admin-item-info">
+                            <div class="admin-item-name">${s.featured ? '⭐ ' : ''}${s.name} ${isExpired ? '❌' : ''}</div>
+                            <div class="admin-item-detail">${getCatName(s.category)} • ${s.city} • ${s.price}${!isExpired ? `<br>⏰ ${daysLeft} ${t('editDays')} ${t('daysRemaining')}` : `<br>${t('expiredBadge')}`}</div>
+                        </div>
+                        <div class="admin-item-actions">
+                            <button style="background:#f59e0b; color:white;" onclick="toggleFeature(${s.id})">${s.featured ? '☆' : '⭐'}</button>
+                            <button style="background:#ef4444; color:white;" onclick="deleteAdAdmin(${s.id})">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            }).join('')}
+        </div>
+    `;
+}
+function toggleFeature(id) {
+    const s = services.find(x => x.id === id);
+    if (!s) return;
+    s.featured = !s.featured;
+    saveData();
+    toast(s.featured ? t('adFeatured') : t('adUnfeatured'), 'success');
+    renderAdminPanel();
+    renderAllServices();
+}
+function deleteAdAdmin(id) {
+    if (!confirm(t('confirmDeleteAd'))) return;
+    services = services.filter(s => s.id !== id);
+    myAds = myAds.filter(x => x !== id);
+    comments = comments.filter(c => c.serviceId !== id);
+    ratings = ratings.filter(r => r.serviceId !== id);
+    saveData();
+    toast(t('adDeleted'), 'success');
+    renderAdminPanel();
+    renderAllServices();
+    renderCategories();
+}
+function deleteAllExpiredAds() {
+    if (!confirm(t('confirmDeleteAllExpired'))) return;
+    const expiredIds = services.filter(s => {
+        const info = getAdLifetimeInfo(s.id);
+        return info && info.isExpired;
+    }).map(s => s.id);
+    services = services.filter(s => !expiredIds.includes(s.id));
+    myAds = myAds.filter(id => !expiredIds.includes(id));
+    expiredIds.forEach(id => {
+        comments = comments.filter(c => c.serviceId !== id);
+        ratings = ratings.filter(r => r.serviceId !== id);
+    });
+    saveData();
+    toast(t('expiredAdsDeleted'), 'success');
+    renderAdminPanel();
+    renderAllServices();
+    renderCategories();
+}
+
+// ==================== NAVIGATION ====================
+function goBack() {
+    if (navHistory.length > 0) { const prev = navHistory.pop(); showTab(prev, true); }
+    else showTab('home', true);
+}
+function showTab(tab, skipHistory) {
+    if (!skipHistory && tab !== currentTab && tab !== 'detail' && tab !== 'admin') {
+        navHistory.push(currentTab);
+        if (navHistory.length > 20) navHistory.shift();
+    }
+    currentTab = tab;
+    const tabs = ['home','services','detail','post','myads','saved','settings','admin'];
+    tabs.forEach(t => {
+        const el = document.getElementById(t + 'Tab');
+        if (el) el.style.display = t === tab ? 'block' : 'none';
+    });
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const map = { home:0, services:1, post:2, myads:3, saved:4, settings:5 };
+    const idx = map[tab];
+    if (idx !== undefined) {
+        document.querySelectorAll('.tab')[idx].classList.add('active');
+        document.querySelectorAll('.nav-item')[idx].classList.add('active');
+    }
+    if (tab === 'home') { renderPaymentStatus(); renderCategories(); }
+    if (tab === 'saved') renderSaved();
+    if (tab === 'services') {
+        if (!viewingCategory) renderAllServices();
+        else renderViewingCategoryServices();
+    }
+    if (tab === 'detail') renderDetail();
+    if (tab === 'post') renderPostTab();
+    if (tab === 'myads') renderMyAds();
+    if (tab === 'settings') loadSettingsUI();
+    if (tab === 'admin') renderAdminPanel();
+}
+
+// ==================== SETTINGS ====================
+function loadSettingsUI() {
+    document.getElementById('settingsNameInput').value = userSettings.name || '';
+    document.getElementById('settingsPhoneInput').value = userSettings.phone || '';
+    document.getElementById('settingsEmailInput').value = userSettings.email || '';
+    document.getElementById('settingsCityInput').value = userSettings.city || '';
+    document.getElementById('emailNotif').checked = userSettings.emailNotif !== false;
+    document.getElementById('smsNotif').checked = userSettings.smsNotif === true;
+    document.getElementById('pushNotif').checked = userSettings.pushNotif !== false;
+    const name = currentUser?.name || userSettings.name || t('guest');
+    const phone = currentUser?.phone || userSettings.phone || t('noPhone');
+    document.getElementById('settingsName').textContent = name;
+    document.getElementById('settingsPhone').textContent = phone;
+    document.getElementById('settingsAvatar').textContent = name.charAt(0).toUpperCase();
+    const existing = document.getElementById('loginLogoutBtn');
+    if (existing) existing.remove();
+    const btn = document.createElement('button');
+    btn.id = 'loginLogoutBtn';
+    btn.className = 'submit-btn';
+    btn.style.marginTop = '10px';
+    if (currentUser) {
+        btn.textContent = '🚪 ' + t('logout');
+        btn.style.background = 'linear-gradient(135deg,#ef4444,#dc2626)';
+        btn.onclick = logout;
+    } else {
+        btn.textContent = t('login');
+        btn.onclick = showLogin;
+    }
+    document.getElementById('btnSaveSettings').parentNode.insertBefore(btn, document.getElementById('btnSaveSettings').nextSibling);
+}
+function saveSettings() {
+    userSettings.name = document.getElementById('settingsNameInput').value.trim();
+    userSettings.phone = document.getElementById('settingsPhoneInput').value.trim();
+    userSettings.email = document.getElementById('settingsEmailInput').value.trim();
+    userSettings.city = document.getElementById('settingsCityInput').value.trim();
+    userSettings.emailNotif = document.getElementById('emailNotif').checked;
+    userSettings.smsNotif = document.getElementById('smsNotif').checked;
+    userSettings.pushNotif = document.getElementById('pushNotif').checked;
+    if (userSettings.pushNotif && 'Notification' in window && Notification.permission === 'default') Notification.requestPermission();
+    if (currentUser) currentUser.name = userSettings.name || currentUser.phone;
+    saveData();
+    loadSettingsUI();
+    toast(t('settingsSaved'), 'success');
+}
+function clearAllData() {
+    if (!confirm(t('confirmClear'))) return;
+    localStorage.removeItem('wedding_v14');
+    location.reload();
+}
+
+// ==================== LANGUAGE ====================
+function setLang(lang) {
+    currentLang = lang;
+    document.getElementById('langAm').classList.toggle('active', lang === 'am');
+    document.getElementById('langEn').classList.toggle('active', lang === 'en');
+    document.getElementById('tagline').textContent = t('tagline');
+    document.getElementById('tabHome').textContent = t('tabHome');
+    document.getElementById('tabServices').textContent = t('tabServices');
+    document.getElementById('tabPost').textContent = t('tabPost');
+    document.getElementById('tabMyads').textContent = t('tabMyads');
+    document.getElementById('tabSaved').textContent = t('tabSaved');
+    document.getElementById('tabSettings').textContent = t('tabSettings');
+    document.querySelector('#navHome .nav-label').textContent = t('navHome');
+    document.querySelector('#navServices .nav-label').textContent = t('navServices');
+    document.querySelector('#navPost .nav-label').textContent = t('navPost');
+    document.querySelector('#navMyads .nav-label').textContent = t('navMyads');
+    document.querySelector('#navSaved .nav-label').textContent = t('navSaved');
+    document.querySelector('#navSettings .nav-label').textContent = t('navSettings');
+    document.getElementById('searchInput').placeholder = t('searchPlaceholder');
+    document.getElementById('homeCatTitle').textContent = t('homeCatTitle');
+    document.getElementById('myadsTitle').textContent = t('myAdsTitle');
+    document.getElementById('savedTitle').textContent = t('savedTitle');
+    document.getElementById('settingsTitle').textContent = t('settingsTitle');
+    document.getElementById('lblFullName').textContent = t('fullName');
+    document.getElementById('lblPhone').textContent = t('phone');
+    document.getElementById('lblEmail').textContent = t('email');
+    document.getElementById('lblCity').textContent = t('city');
+    document.getElementById('notifTitle').textContent = t('notifTitle');
+    document.getElementById('lblEmailNotif').textContent = t('emailNotif');
+    document.getElementById('lblSmsNotif').textContent = t('smsNotif');
+    document.getElementById('lblPushNotif').textContent = t('pushNotif');
+    document.getElementById('btnSaveSettings').textContent = t('saveSettings');
+    document.getElementById('btnAdmin').textContent = t('adminPanel');
+    document.getElementById('btnClearData').textContent = t('clearData');
+    renderCategories();
+    if (viewingCategory) renderViewingCategoryServices();
+    else renderAllServices();
+    renderMyAds();
+    renderSaved();
+    renderPaymentStatus();
+    loadSettingsUI();
+    if (currentEditingId) renderEditForm();
+    else if (currentTab === 'post') renderPostTab();
+    if (currentTab === 'admin') renderAdminPanel();
+}
+function getCats() { return CATEGORIES; }
+
+// ==================== CATEGORIES ====================
+function renderCategories() {
+    const grid = document.getElementById('categoriesGrid');
+    if (!grid) return;
+    const activeServices = getActiveServices();
+    grid.innerHTML = CATEGORIES.map(c => {
+        const count = activeServices.filter(s => s.category === c.name_am).length;
+        const displayName = currentLang === 'am' ? c.name_am : c.name_en;
+        return `
+            <div class="category-card ${selectedCategory === c.name_am ? 'active' : ''}" onclick="filterByCat('${c.name_am}')">
+                <span class="category-icon">${c.icon}</span>
+                <div class="category-name">${displayName}</div>
+                <div style="font-size:9px;color:var(--text-muted);margin-top:2px;">(${count})</div>
+            </div>
+        `;
+    }).join('');
+}
+function filterByCat(cat) {
+    selectedCategory = cat;
+    viewingCategory = cat;
+    renderCategories();
+    const titleEl = document.getElementById('servicesSectionTitle');
+    const backBtn = document.getElementById('backToCatsBtn');
+    const catObj = CATEGORIES.find(c => c.name_am === cat);
+    const displayName = catObj ? (currentLang === 'am' ? catObj.name_am : catObj.name_en) : cat;
+    titleEl.textContent = `${catObj ? catObj.icon : '📋'} ${displayName}`;
+    backBtn.style.display = 'inline-block';
+    backBtn.textContent = t('backToCats');
+    showTab('services');
+    renderViewingCategoryServices();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function renderViewingCategoryServices() {
+    const c = document.getElementById('allServicesList');
+    if (!c) return;
+    const activeServices = getActiveServices();
+    const filtered = activeServices.filter(s => s.category === viewingCategory);
+    filtered.sort((a,b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+    if (filtered.length === 0) {
+        const catObj = CATEGORIES.find(c => c.name_am === viewingCategory);
+        const displayName = catObj ? (currentLang === 'am' ? catObj.name_am : catObj.name_en) : viewingCategory;
+        c.innerHTML = `<div class="empty"><div class="empty-icon">😢</div><div>${t('noAdsInCat')} (${displayName})</div><br><button class="btn btn-primary" onclick="showTab('post')">${t('postFirst')}</button></div>`;
+        return;
+    }
+    c.innerHTML = filtered.map(s => serviceCardHTML(s)).join('');
+}
+function backToCategories() {
+    viewingCategory = null;
+    selectedCategory = 'all';
+    renderCategories();
+    showTab('home');
+    toast(t('allCategories'));
+}
+function handleSearch() {
+    const query = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
+    if (!query) { renderCategories(); return; }
+    const activeServices = getActiveServices();
+    const filtered = activeServices.filter(s => 
+        s.name.toLowerCase().includes(query) ||
+        getCatName(s.category).toLowerCase().includes(query) ||
+        s.city.toLowerCase().includes(query) ||
+        s.description.toLowerCase().includes(query)
+    );
+    const titleEl = document.getElementById('servicesSectionTitle');
+    titleEl.textContent = `🔍 ${query} (${filtered.length})`;
+    viewingCategory = null;
+    showTab('services');
+    const c = document.getElementById('allServicesList');
+    if (filtered.length === 0) { c.innerHTML = `<div class="empty"><div class="empty-icon">😢</div>${t('noService')}</div>`; return; }
+    c.innerHTML = filtered.map(s => serviceCardHTML(s)).join('');
+}
+
+// ==================== SERVICES ====================
+function renderAllServices() {
+    viewingCategory = null;
+    const titleEl = document.getElementById('servicesSectionTitle');
+    const backBtn = document.getElementById('backToCatsBtn');
+    titleEl.textContent = t('allServices');
+    backBtn.style.display = 'none';
+    const c = document.getElementById('allServicesList');
+    if (!c) return;
+    const activeServices = getActiveServices();
+    const sorted = [...activeServices].sort((a,b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+    if (sorted.length === 0) { c.innerHTML = `<div class="empty">${t('noService')}</div>`; return; }
+    c.innerHTML = sorted.map(s => serviceCardHTML(s)).join('');
+}
+function serviceCardHTML(s) {
+    const isSaved = savedServices.includes(s.id);
+    const stars = '⭐'.repeat(Math.floor(s.rating)) + '☆'.repeat(5 - Math.floor(s.rating));
+    const isMine = myAds.includes(s.id);
+    const mediaItems = s.media || [];
+    const catName = getCatName(s.category);
+    const featuredText = currentLang === 'am' ? '⭐ ቅድሚያ' : '⭐ Premium';
+    const editInfo = getEditInfo(s.id);
+    const canEdit = editInfo && !editInfo.isExpired;
+    const lifetimeInfo = getAdLifetimeInfo(s.id);
+    let editBtnHtml = '';
+    if (isMine) {
+        if (canEdit) {
+            const daysText = editInfo.daysLeft > 0 ? `${editInfo.daysLeft} ${t('editDays')}` : `${editInfo.hoursLeft} ${t('editHours')}`;
+            editBtnHtml = `<button class="edit-badge" onclick="event.stopPropagation();editAd(${s.id})">✏️ ${currentLang === 'am' ? 'አስተካክል' : 'Edit'} (${daysText})</button>`;
+        } else {
+            editBtnHtml = `<button class="edit-badge expired" disabled>${t('editTimeExpired')}</button>`;
+        }
+    }
+    return `
+        <div class="service-card" onclick="showDetail(${s.id})" style="cursor:pointer;">
+            ${s.featured ? `<div class="featured-badge">${featuredText}</div>` : ''}
+            ${lifetimeInfo ? adLifetimeBadgeHTML(s.id) : ''}
+            <div class="service-header">
+                <div class="service-name">${s.name} ${isMine ? '📢' : ''}</div>
+                <div class="service-price">${s.price}</div>
+            </div>
+            <div class="service-details" style="margin-bottom:10px;"><span>📋 ${catName}</span></div>
+            ${mediaItems.length > 0 ? `
+                <div class="media-preview" style="margin-bottom:10px;">
+                    ${mediaItems.map((m, i) => `
+                        <div class="preview-item" onclick="event.stopPropagation();openViewer(${s.id}, ${i})">
+                            ${m.type === 'image' ? `<img src="${m.url}">` : `<video src="${m.url}"></video>`}
+                            <div class="zoom-overlay">🔍</div>
+                        </div>
+                    `).join('')}
+                </div>
+            ` : ''}
+            <div class="service-description">${s.description}</div>
+            <div class="service-details"><span>📍 ${s.city}</span></div>
+            <div class="service-rating">
+                <span class="stars">${stars}</span>
+                <span class="rating-text">${s.rating}/5 (${s.reviews} ${t('reviews')})</span>
+            </div>
+            <div class="btn-group">
+                <button class="btn-success" onclick="event.stopPropagation();location.href='tel:${s.phone}'">${t('call')}</button>
+                <button class="${isSaved ? 'btn-danger' : 'btn-warning'}" onclick="event.stopPropagation();toggleSave(${s.id})">${isSaved ? '❤️' : '🤍'}</button>
+                <button class="share-btn" onclick="event.stopPropagation();shareAd(${s.id})">${t('share')}</button>
+            </div>
+            ${editBtnHtml ? `<div style="margin-top:8px; text-align:right;">${editBtnHtml}</div>` : ''}
+        </div>
+    `;
+}
+function toggleSave(id) {
+    const i = savedServices.indexOf(id);
+    if (i > -1) { savedServices.splice(i, 1); toast(t('removedMsg')); }
+    else { savedServices.push(id); toast(t('savedMsg'), 'success'); }
+    saveData();
+    if (viewingCategory) renderViewingCategoryServices();
+    else renderAllServices();
+    renderSaved();
+}
+function renderSaved() {
+    const c = document.getElementById('savedList');
+    if (!c) return;
+    const activeServices = getActiveServices();
+    const list = activeServices.filter(s => savedServices.includes(s.id));
+    if (list.length === 0) { c.innerHTML = `<div class="empty"><div class="empty-icon">❤️</div>${t('noSaved')}</div>`; return; }
+    c.innerHTML = list.map(s => serviceCardHTML(s)).join('');
+}
+function renderMyAds() {
+    const c = document.getElementById('myAdsList');
+    if (!c) return;
+    const list = services.filter(s => myAds.includes(s.id));
+    if (list.length === 0) {
+        c.innerHTML = `<div class="empty"><div class="empty-icon">📢</div>${t('noAds')}<br><br><button class="btn btn-primary" onclick="showTab('post')">${t('postAdBtn')}</button></div>`;
+        return;
+    }
+    c.innerHTML = list.map(s => serviceCardHTML(s)).join('');
+}
+
+// ==================== EDIT FORM ====================
+function renderEditForm() {
+    const container = document.getElementById('postContent');
+    const s = services.find(x => x.id === currentEditingId);
+    if (!s) { currentEditingId = null; renderPostTab(); return; }
+    const info = getEditInfo(currentEditingId);
+    if (!info || info.isExpired) { toast(t('editExpired'), 'error'); currentEditingId = null; showTab('myads'); return; }
+    const typeText = s.featured ? `⭐ ${t('premium')}` : `📢 ${t('normal')}`;
+    container.innerHTML = `
+        <div style="padding:15px;"><button class="back-btn" onclick="cancelEdit()">${t('backToMyAds')}</button></div>
+        <div class="form-card" style="border-color:#8b5cf6;">
+            <div class="section-title" style="color:#8b5cf6;">${t('editingAd')}</div>
+            <div class="info-box" style="background:rgba(139,92,246,.15); border-color:#8b5cf6; color:#a78bfa;">${t('editInfo')}</div>
+            <div id="editTimerContent">${renderEditTimerHTML(info)}</div>
+            <div class="form-group" style="margin-top:20px;"><label>${t('adCategory')}</label><select id="adCategory"></select></div>
+            <div class="form-group"><label>${t('adName')}</label><input type="text" id="adName" value="${s.name}"></div>
+            <div class="form-group"><label>${t('adPhone')}</label><input type="tel" id="adPhone" value="${s.phone}"></div>
+            <div class="form-group"><label>${t('adCity')}</label><input type="text" id="adCity" value="${s.city}"></div>
+            <div class="form-group"><label>${t('adPrice')}</label><input type="text" id="adPrice" value="${s.price}"></div>
+            <div class="form-group">
+                <label>${t('adDesc')}</label>
+                <textarea id="adDesc" rows="3">${s.description}</textarea>
+                <button class="btn btn-dark btn-sm" style="margin-top:8px;" onclick="generateDesc()">${t('aiGenerate')}</button>
+            </div>
+            <div class="form-group">
+                <label>${t('photosLabel')}</label>
+                <div class="media-upload" onclick="document.getElementById('mediaInput').click()">
+                    <div style="font-size:35px;">📸</div>
+                    <div style="color:var(--text-secondary); margin-top:8px; font-size:13px;">${t('photosUpload')}</div>
+                </div>
+                <input type="file" id="mediaInput" accept="image/*" multiple style="display:none" onchange="handleMedia(event)">
+                <div class="media-preview" id="mediaPreview"></div>
+            </div>
+            <div class="form-group">
+                <label>${t('videoLabel')}</label>
+                <div class="media-upload" onclick="document.getElementById('videoInput').click()">
+                    <div style="font-size:35px;">🎥</div>
+                    <div style="color:var(--text-secondary); margin-top:8px; font-size:13px;">${t('videoUpload')}</div>
+                </div>
+                <input type="file" id="videoInput" accept="video/*" style="display:none" onchange="handleVideo(event)">
+                <div class="video-duration-warn" id="videoWarn" style="display:none; color:#f59e0b; font-size:11px; margin-top:5px;">${t('videoWarn')}</div>
+                <div class="media-preview" id="videoPreview"></div>
+            </div>
+            <div class="form-group">
+                <label>${t('adTypeDisplay')}</label>
+                <input type="text" id="adTypeDisplay" readonly value="${typeText}" style="background:rgba(30,58,138,.2); color:var(--accent); font-weight:bold;">
+            </div>
+            <button class="submit-btn" style="background:linear-gradient(135deg,#8b5cf6,#6366f1);" onclick="submitAd()">${t('saveChanges')}</button>
+        </div>
+    `;
+    const sel = document.getElementById('adCategory');
+    sel.innerHTML = CATEGORIES.map(c => {
+        const dn = currentLang === 'am' ? c.name_am : c.name_en;
+        return `<option value="${c.name_am}" ${c.name_am === s.category ? 'selected' : ''}>${c.icon} ${dn}</option>`;
+    }).join('');
+    selectedMedia = (s.media || []).filter(m => m.type === 'image');
+    const videos = (s.media || []).filter(m => m.type === 'video');
+    selectedVideo = videos.length > 0 ? videos[0] : null;
+    renderMediaPreview();
+    renderVideoPreview();
+}
+function renderEditTimerHTML(info) {
+    let statusBadge = t('editActive'), statusClass = '', barClass = '';
+    if (info.isExpired) { statusBadge = t('editExpiredBadge'); statusClass = 'danger'; barClass = 'danger'; }
+    else if (info.isExpiring) { statusBadge = t('editExpiring'); statusClass = 'warn'; barClass = 'warn'; }
+    return `
+        <div class="edit-timer-box">
+            <div class="edit-timer-title">
+                <span>⏱️</span> ${t('editTimerTitle')}
+                <span class="payment-bar-badge ${statusClass === 'warn' ? 'warn' : statusClass === 'danger' ? 'danger' : ''}" style="margin-left:auto;">${statusBadge}</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:15px 0;">
+                <div style="text-align:center; background:var(--bg-primary); border-radius:10px; padding:12px;">
+                    <div class="edit-timer-value ${info.isExpiring ? 'warn' : ''} ${info.isExpired ? 'danger' : ''}" style="font-size:22px;">${info.isExpired ? '0' : info.daysLeft}</div>
+                    <div class="edit-timer-label">${t('editDays')}</div>
+                </div>
+                <div style="text-align:center; background:var(--bg-primary); border-radius:10px; padding:12px;">
+                    <div class="edit-timer-value ${info.isExpiring ? 'warn' : ''}" style="font-size:22px;">${info.isExpired ? '0' : info.hoursLeft}</div>
+                    <div class="edit-timer-label">${t('editHours')}</div>
+                </div>
+                <div style="text-align:center; background:var(--bg-primary); border-radius:10px; padding:12px;">
+                    <div class="edit-timer-value" style="font-size:22px;">${info.isExpired ? '0' : info.minutesLeft}</div>
+                    <div class="edit-timer-label">${t('editMinutes')}</div>
+                </div>
+            </div>
+            <div class="edit-timer-row"><span class="edit-timer-label">📅 ${t('editPostedDate')}</span><span class="edit-timer-value">${formatDate(info.postedDate)}</span></div>
+            <div class="edit-timer-row"><span class="edit-timer-label">🏁 ${t('editDeadlineDate')}</span><span class="edit-timer-value ${info.isExpiring ? 'warn' : ''} ${info.isExpired ? 'danger' : ''}">${formatDate(info.deadline)}</span></div>
+            <div style="margin-top:10px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                    <span class="edit-timer-label">${t('editProgress')}</span>
+                    <span class="edit-timer-label">${Math.round(info.progressPercent)}%</span>
+                </div>
+                <div class="edit-timer-progress"><div class="edit-timer-progress-bar ${barClass}" style="width:${info.progressPercent}%;"></div></div>
+            </div>
+        </div>
+    `;
+}
+function editAd(id) {
+    const info = getEditInfo(id);
+    if (!info || info.isExpired) { toast(t('editExpired'), 'error'); return; }
+    currentEditingId = id;
+    showTab('post');
+    renderEditForm();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function cancelEdit() { currentEditingId = null; showTab('myads'); }
+
+// ==================== POST FORM ====================
+function renderPostForm() {
+    const container = document.getElementById('postContent');
+    const remaining = getRemainingTime();
+    const typeText = paymentStatus.type === 'premium' ? `⭐ ${t('premium')} (600 ETB)` : `📢 ${t('normal')} (300 ETB)`;
+    container.innerHTML = `
+        <div style="padding:15px;"><button class="back-btn" onclick="goBack()">${t('back')}</button></div>
+        <div class="payment-bar active">
+            <div class="payment-bar-title active"><span>✅</span> ${t('paymentConfirmed')}</div>
+            <div style="color:var(--text-secondary); font-size:12px;">${t('timeLeftShort')}</div>
+            <div class="payment-bar-time" id="postCountdown">${formatTime(remaining)}</div>
+            <div class="payment-bar-desc">📅 ${t('adValid30Days')}<br>${t('afterPostEnds')}</div>
+        </div>
+        <div class="form-card">
+            <div class="section-title" id="postFormTitle">${t('newAd')}</div>
+            <input type="hidden" id="editingId" value="">
+            <div class="form-group"><label>${t('adCategory')}</label><select id="adCategory"></select></div>
+            <div class="form-group"><label>${t('adName')}</label><input type="text" id="adName"></div>
+            <div class="form-group"><label>${t('adPhone')}</label><input type="tel" id="adPhone"></div>
+            <div class="form-group"><label>${t('adCity')}</label><input type="text" id="adCity"></div>
+            <div class="form-group"><label>${t('adPrice')}</label><input type="text" id="adPrice" placeholder="${currentLang === 'am' ? 'ለምሳሌ: 5,000 ብር' : 'e.g. 5,000 ETB'}"></div>
+            <div class="form-group">
+                <label>${t('adDesc')}</label>
+                <textarea id="adDesc" rows="3"></textarea>
+                <button class="btn btn-dark btn-sm" style="margin-top:8px;" onclick="generateDesc()">${t('aiGenerate')}</button>
+            </div>
+            <div class="form-group">
+                <label>${t('photosLabel')}</label>
+                <div class="media-upload" onclick="document.getElementById('mediaInput').click()">
+                    <div style="font-size:35px;">📸</div>
+                    <div style="color:var(--text-secondary); margin-top:8px; font-size:13px;">${t('photosUpload')}</div>
+                </div>
+                <input type="file" id="mediaInput" accept="image/*" multiple style="display:none" onchange="handleMedia(event)">
+                <div class="media-preview" id="mediaPreview"></div>
+            </div>
+            <div class="form-group">
+                <label>${t('videoLabel')}</label>
+                <div class="media-upload" onclick="document.getElementById('videoInput').click()">
+                    <div style="font-size:35px;">🎥</div>
+                    <div style="color:var(--text-secondary); margin-top:8px; font-size:13px;">${t('videoUpload')}</div>
+                </div>
+                <input type="file" id="videoInput" accept="video/*" style="display:none" onchange="handleVideo(event)">
+                <div class="video-duration-warn" id="videoWarn" style="display:none; color:#f59e0b; font-size:11px; margin-top:5px;">${t('videoWarn')}</div>
+                <div class="media-preview" id="videoPreview"></div>
+            </div>
+            <div class="form-group">
+                <label>${t('adTypeDisplay')}</label>
+                <input type="text" id="adTypeDisplay" readonly style="background:rgba(30,58,138,.2); color:var(--accent); font-weight:bold;">
+            </div>
+            <button class="submit-btn" id="submitAdBtn" onclick="submitAd()">${t('submitAd')}</button>
+        </div>
+    `;
+    document.getElementById('adTypeDisplay').value = typeText;
+    updateAdCategoryDropdown();
+    resetForm();
+}
+function updatePostCountdown() { const el = document.getElementById('postCountdown'); if (el) el.textContent = formatTime(getRemainingTime()); }
+function resetForm() {
+    const ed = document.getElementById('editingId');
+    if (!ed) return;
+    ed.value = '';
+    document.getElementById('adName').value = '';
+    document.getElementById('adPhone').value = '';
+    document.getElementById('adCity').value = '';
+    document.getElementById('adPrice').value = '';
+    document.getElementById('adDesc').value = '';
+    selectedMedia = [];
+    selectedVideo = null;
+    renderMediaPreview();
+    renderVideoPreview();
+    const vw = document.getElementById('videoWarn');
+    if (vw) vw.style.display = 'none';
+}
+function updateAdCategoryDropdown() {
+    const sel = document.getElementById('adCategory');
+    if (!sel) return;
+    sel.innerHTML = CATEGORIES.map(c => {
+        const dn = currentLang === 'am' ? c.name_am : c.name_en;
+        return `<option value="${c.name_am}">${c.icon} ${dn}</option>`;
+    }).join('');
+}
+function handleMedia(e) {
+    const files = Array.from(e.target.files);
+    if (selectedMedia.length + files.length > 10) { toast(t('tooManyPhotos'), 'error'); return; }
+    files.forEach(f => {
+        const r = new FileReader();
+        r.onload = ev => { selectedMedia.push({ type:'image', url:ev.target.result }); renderMediaPreview(); };
+        r.readAsDataURL(f);
+    });
+    e.target.value = '';
+}
+function renderMediaPreview() {
+    const el = document.getElementById('mediaPreview');
+    if (!el) return;
+    el.innerHTML = selectedMedia.map((m,i) => `
+        <div class="preview-item" onclick="viewMedia('${m.url}','image')">
+            <img src="${m.url}">
+            <div class="remove-media" onclick="event.stopPropagation();selectedMedia.splice(${i},1);renderMediaPreview();">×</div>
+            <div class="zoom-overlay">🔍</div>
+        </div>
+    `).join('');
+}
+function handleVideo(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const video = document.createElement('video');
+    video.preload = 'metadata';
+    video.onloadedmetadata = () => {
+        window.URL.revokeObjectURL(video.src);
+        if (video.duration > 120) { document.getElementById('videoWarn').style.display = 'block'; toast(t('videoTooLong'), 'error'); return; }
+        document.getElementById('videoWarn').style.display = 'none';
+        const r = new FileReader();
+        r.onload = ev => { selectedVideo = { type:'video', url:ev.target.result, duration:video.duration }; renderVideoPreview(); toast(t('videoUploaded') + ' (' + Math.round(video.duration) + 's)', 'success'); };
+        r.readAsDataURL(file);
+    };
+    video.src = URL.createObjectURL(file);
+    e.target.value = '';
+}
+function renderVideoPreview() {
+    const c = document.getElementById('videoPreview');
+    if (!c) return;
+    if (!selectedVideo) { c.innerHTML = ''; return; }
+    c.innerHTML = `
+        <div class="preview-item" onclick="viewMedia('${selectedVideo.url}','video')">
+            <video src="${selectedVideo.url}"></video>
+            <div class="remove-media" onclick="event.stopPropagation();selectedVideo=null;renderVideoPreview();">×</div>
+            <div class="zoom-overlay">🔍</div>
+        </div>
+    `;
+}
+function generateDesc() {
+    const catAm = document.getElementById('adCategory').value;
+    const templatesAm = {
+        'ዲጄ': '🎵 ሙዚቃ እና መዝናኛ ለሰርግዎ! ዘመናዊ እና ባህላዊ ድብልቅ ሙዚቃ እናቀርባለን።',
+        'ዲኮር': '🎨 ውብ እና ዘመናዊ የሰርግ ማስጌጫ እናቀርባለን።',
+        'አስጨፋሪ': '🎊 ልዩ የሰርግ አስጨፋሪ አገልግሎት!',
+        'ባንድ': '🎷 ሙያዊ ባንድ ለሰርግዎ!',
+        'መኪና ክራይ': '🚗 ዘመናዊ የሙሽራ እና ሚዜ መኪናዎች።',
+        'የሚዜ አገልግሎት': '👰 ሙያዊ የሚዜ አገልግሎት!',
+        'ምግብ': '🍽️ ጣፋጭ እና የተለያዩ ምግቦች ለሰርግዎ!',
+        'ፎቶ እና ቪድዮ': '📸 ሙያዊ ፎቶግራፍ እና ቪዲዮ ቀረጻ!',
+        'የአበባ አቅራቢ': '💐 ውብ እና የተለያዩ አበቦች ለሰርግዎ!',
+        'ሜካብ': '⛪ ባህላዊ እና ዘመናዊ የሰርግ ሜካብ።',
+        'አማካሪ': '🧑‍💼 ሙሉ የሰርግ እቅድ እና አደረጃጀት!',
+        'አዳራሽ': '🏰 ውብ እና ምቹ የሰርግ አዳራሽ!',
+        'መናፈሻ': '🏞️ ውብ የውጭ ሰርግ ቦታ!',
+        'ጥሬ ስጋ': '🥩 ምርጥ ጥራት ያለው ጥሬ ስጋ!'
+    };
+    const templatesEn = {
+        'ዲጄ': '🎵 Music and entertainment for your wedding!',
+        'ዲኮር': '🎨 Beautiful and modern wedding decoration.',
+        'አስጨፋሪ': '🎊 Special wedding entertainment service!',
+        'ባንድ': '🎷 Professional band for your wedding!',
+        'መኪና ክራይ': '🚗 Modern bridal and bridesmaid cars.',
+        'የሚዜ አገልግሎት': '👰 Professional bridesmaid service!',
+        'ምግብ': '🍽️ Delicious and varied food for your wedding!',
+        'ፎቶ እና ቪድዮ': '📸 Professional photography and video recording!',
+        'የአበባ አቅራቢ': '💐 Beautiful and varied flowers!',
+        'ሜካብ': '⛪ Traditional and modern wedding ceremony.',
+        'አማካሪ': '🧑‍💼 Complete wedding planning!',
+        'አዳራሽ': '🏰 Beautiful and comfortable wedding hall!',
+        'መናፈሻ': '🏞️ Beautiful outdoor wedding venue!',
+        'ጥሬ ስጋ': '🥩 Best quality raw meat!'
+    };
+    const templates = currentLang === 'am' ? templatesAm : templatesEn;
+    const catObj = CATEGORIES.find(c => c.name_am === catAm);
+    const dn = catObj ? (currentLang === 'am' ? catObj.name_am : catObj.name_en) : catAm;
+    document.getElementById('adDesc').value = templates[catAm] || (currentLang === 'am' ? `ሙያዊ ${dn} አገልግሎት!` : `Professional ${dn} service!`);
+    toast(t('descGenerated'));
+}
+function submitAd() {
+    const isEditing = currentEditingId !== null;
+    if (isEditing) {
+        const info = getEditInfo(currentEditingId);
+        if (!info || info.isExpired) { toast(t('editExpired'), 'error'); currentEditingId = null; showTab('myads'); return; }
+    } else {
+        if (!isPaymentValid()) { toast(t('paymentExpired'), 'error'); renderPostTab(); return; }
+    }
+    const name = document.getElementById('adName').value.trim();
+    const category = document.getElementById('adCategory').value;
+    const phone = document.getElementById('adPhone').value.trim();
+    const city = document.getElementById('adCity').value.trim() || (currentLang === 'am' ? 'አዲስ አበባ' : 'Addis Ababa');
+    const price = document.getElementById('adPrice').value.trim() || (currentLang === 'am' ? 'ይደውሉ' : 'Call');
+    const desc = document.getElementById('adDesc').value.trim() || (currentLang === 'am' ? 'አዲስ አገልግሎት' : 'New service');
+    if (!name || !phone) { toast(t('fillNamePhone'), 'error'); return; }
+    const allMedia = [...selectedMedia];
+    if (selectedVideo) allMedia.push(selectedVideo);
+    if (isEditing) {
+        const s = services.find(x => x.id === currentEditingId);
+        if (s) {
+            s.category = category; s.name = name; s.phone = phone; s.city = city;
+            s.price = price; s.description = desc; s.media = allMedia;
+            s.updatedAt = new Date().toISOString();
+            toast(t('adUpdated'), 'success');
+        }
+        saveData();
+        currentEditingId = null;
+        renderCategories();
+        if (viewingCategory) renderViewingCategoryServices();
+        else renderAllServices();
+        renderMyAds();
+        showTab('myads');
+    } else {
+        const newId = services.length > 0 ? Math.max(...services.map(s => s.id)) + 1 : 1;
+        services.push({
+            id: newId, category, name, phone, city, price, description: desc,
+            rating: 5.0, reviews: 0,
+            featured: paymentStatus.type === 'premium',
+            media: allMedia, date: new Date().toISOString()
+        });
+        myAds.push(newId);
+        paymentStatus.used = true;
+        paymentStatus.postedAdId = newId;
+        paymentStatus.verified = false;
+        paymentStatus.expiresAt = Date.now();
+        addNotification('ad', t('newAdPosted'), name);
+        toast(t('adSubmitted'), 'success');
+        saveData();
+        resetForm();
+        renderCategories();
+        if (viewingCategory) renderViewingCategoryServices();
+        else renderAllServices();
+        renderMyAds();
+        renderPaymentStatus();
+        showTab('myads');
+    }
+}
+
+// ==================== VIEWER ====================
+function openViewer(serviceId, index) {
+    const s = services.find(x => x.id === serviceId);
+    if (!s || !s.media) return;
+    viewerMedia = s.media; viewerIndex = index;
+    renderViewer();
+    document.getElementById('fullscreenViewer').classList.add('show');
+}
+function viewMedia(url, type) {
+    viewerMedia = [{ type, url }]; viewerIndex = 0;
+    renderViewer();
+    document.getElementById('fullscreenViewer').classList.add('show');
+}
+function renderViewer() {
+    const m = viewerMedia[viewerIndex];
+    if (!m) return;
+    const content = document.getElementById('viewerContent');
+    content.innerHTML = m.type === 'image' ? `<img src="${m.url}" id="viewerImg" style="transform:scale(1)">` : `<video src="${m.url}" controls autoplay id="viewerVid"></video>`;
+    document.getElementById('viewerInfo').textContent = `${viewerIndex + 1}/${viewerMedia.length}`;
+    const controls = document.getElementById('viewerControls');
+    const html = [];
+    if (m.type === 'image') {
+        html.push(`<button onclick="zoomImage(1.5)">${t('zoom')}</button>`);
+        html.push(`<button onclick="zoomImage(0.7)">${t('zoomOut')}</button>`);
+        html.push(`<button onclick="resetZoom()">${t('reset')}</button>`);
+    } else {
+        html.push(`<button onclick="togglePlay()">${t('play')}</button>`);
+        html.push(`<button onclick="toggleMute()">${t('mute')}</button>`);
+    }
+    html.push(`<button onclick="closeViewer()">${t('close')}</button>`);
+    controls.innerHTML = html.join('');
+    document.querySelector('.viewer-nav.prev').style.display = viewerMedia.length > 1 ? 'block' : 'none';
+    document.querySelector('.viewer-nav.next').style.display = viewerMedia.length > 1 ? 'block' : 'none';
+}
+function zoomImage(f) {
+    const img = document.getElementById('viewerImg');
+    if (!img) return;
+    const cur = parseFloat(img.dataset.scale || '1');
+    const ns = Math.max(0.5, Math.min(5, cur * f));
+    img.dataset.scale = ns;
+    img.style.transform = `scale(${ns})`;
+    toast(`Zoom: ${Math.round(ns * 100)}%`);
+}
+function resetZoom() { const img = document.getElementById('viewerImg'); if (img) { img.dataset.scale = '1'; img.style.transform = 'scale(1)'; } }
+function togglePlay() { const v = document.getElementById('viewerVid'); if (v) v.paused ? v.play() : v.pause(); }
+function toggleMute() { const v = document.getElementById('viewerVid'); if (v) { v.muted = !v.muted; toast(v.muted ? '🔇' : '🔊'); } }
+function nextMedia() { if (viewerIndex < viewerMedia.length - 1) { viewerIndex++; renderViewer(); } }
+function prevMedia() { if (viewerIndex > 0) { viewerIndex--; renderViewer(); } }
+function closeViewer() { document.getElementById('fullscreenViewer').classList.remove('show'); document.getElementById('viewerContent').innerHTML = ''; }
+
+// ==================== COPY ====================
+function copyAccount(account, btn) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(account).then(() => {
+            btn.classList.add('copied'); btn.innerHTML = t('copied');
+            toast('📋 ' + account, 'success');
+            setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = t('copy'); }, 2000);
+        }).catch(() => fallbackCopy(account, btn));
+    } else { fallbackCopy(account, btn); }
+}
+function fallbackCopy(text, btn) {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try {
+        document.execCommand('copy');
+        btn.classList.add('copied'); btn.innerHTML = t('copied');
+        toast('📋 ' + text, 'success');
+        setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = t('copy'); }, 2000);
+    } catch (e) { toast('⚠️ Copy failed', 'error'); }
+    document.body.removeChild(ta);
+}
+
+// ==================== UTILS ====================
+function toast(msg, type) {
+    const tt = document.createElement('div');
+    tt.className = 'toast' + (type === 'success' ? ' success' : type === 'error' ? ' error' : type === 'warn' ? ' warn' : '');
+    tt.textContent = msg;
+    document.body.appendChild(tt);
+    setTimeout(() => tt.remove(), 3500);
+}
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeViewer(); closeModal(); }
+    if (e.key === 'ArrowRight') nextMedia();
+    if (e.key === 'ArrowLeft') prevMedia();
+});
+
+// ==================== INIT ====================
+loadData();
+setLang('am');
+renderPaymentStatus();
+</script>
+</body>
+</html>
